@@ -1,45 +1,38 @@
 /**
  * Created by sunday on 12/2/16.
  */
-(function(angular){
-    "use strict";
+(function ()
+{
+    'use strict';
     angular.module('cinkciarzTraining')
-        .service('WalletService', WalletService);
+            .service('WalletService', WalletService);
 
-    function WalletService(MY_CONST, $localStorage, $window){
+    function WalletService($localStorage, $window)
+    {
 
-        this.getPln = function () {
-            return $localStorage.wallet.pln;
+        this.getWallet = function ()
+        {
+            return $localStorage.wallet;
         };
 
-        this.getEur = function () {
-            return $localStorage.wallet.eur;
+        this.buy = function (code, rate, value)
+        {
+            $localStorage.wallet.PLN += (rate * value);
+            $localStorage.wallet[code] -= value;
         };
 
-        this.getUsd = function(){
-            return $localStorage.wallet.usd;
+        this.sell = function (code, rate, value)
+        {
+            $localStorage.wallet[code] += value;
+            $localStorage.wallet.PLN -= (rate * value);
         };
 
-        this.getGbp = function(){
-            return $localStorage.wallet.gbp;
-        };
-
-
-        this.buyEur = function(value){
-            $localStorage.wallet.pln -= (MY_CONST.EUR_BUY * value);
-            $localStorage.wallet.eur += value;
-        };
-
-        this.sellEur = function(value){
-            $localStorage.wallet.eur -= value;
-            $localStorage.wallet.pln += (MY_CONST.EUR_SEL * value);
-        };
-
-        this.reset = function(){
+        this.reset = function ()
+        {
             $localStorage.$reset();
             $window.location.reload();
-        }
+        };
 
     }
 
-})(angular);
+})();

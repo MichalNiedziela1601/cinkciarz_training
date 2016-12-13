@@ -1,5 +1,34 @@
 <section>
-    <div class="row page_wrapper">
-        {{vm.currency}}
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-sm-12">
+            <div class="page_wrapper pd-bottom-5">
+                <h2>Sprzedaż {{vm.showTitle()}}</h2>
+
+                <div class="panel">
+                    <div class="panel-heading pan-heading"><h3 class="panel-title">Twój portfel</h3></div>
+
+                    <div class="panel-body">
+                        <h3>PLN: {{vm.wallet.PLN | number : 2}}</h3>
+                        <h3>{{vm.rate.code}}: {{vm.wallet[vm.currency]}}</h3></div>
+                </div>
+                <h3>Kurs sprzedaży: {{vm.rate.rates[0].ask}}</h3>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="buy" class="control-label col-md-3">Podaj ilośc: </label>
+                        <div class="col-md-5"><input type="text" ng-model="value" id="buy" class="form-control"></div>
+                    </div>
+                </div>
+
+                <div ng-show="vm.divShow" class="alert alert-danger animate-hide">
+
+                    {{vm.message}}
+                </div>
+
+                <button class="btn btn-success" ng-click="vm.sell()">Kup</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-info" ng-click="vm.back()">Powrót</button>
+            </div>
+        </div>
     </div>
 </section>

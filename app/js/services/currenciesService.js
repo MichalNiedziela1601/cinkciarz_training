@@ -1,26 +1,39 @@
 /**
  * Created by sunday on 12/6/16.
  */
-(function (angular) {
-    "use strict";
+(function ()
+{
+    'use strict';
     angular.module('cinkciarzTraining').factory('CurrenciesService', CurrenciesService);
 
-    function CurrenciesService($http, $q) {
+    function CurrenciesService($http, $q)
+    {
 
         return {
-            getCurrencies: function () {
+            getCurrencies: function ()
+            {
                 var deffered = $q.defer();
-                $http.get('http://api.nbp.pl/api/exchangerates/rates/c/usd/today/').success(function (data) {
-                    return deffered.resolve(data);
-                })
-                    .error(function(data){
-                    return deffered.reject(data);
+                var urls = [{url: 'https://api.nbp.pl/api/exchangerates/rates/c/usd/today/'}, {url: 'https://api.nbp.pl/api/exchangerates/rates/c/eur/today/'},
+                    {url: 'https://api.nbp.pl/api/exchangerates/rates/c/gbp/today/'}];
+
+                var urlsCalls = [];
+                angular.forEach(urls, function (url)
+                {
+                    urlsCalls.push($http.get(url.url));
                 });
+                $q.all(urlsCalls)
+                        .then(function (result)
+                        {
+                            deffered.resolve(result);
+                        }, function (error)
+                        {
+                            deffered.reject(error);
+                        });
 
                 return deffered.promise;
             }
-        }
+
+        };
     }
 
-})
-(angular);
+})();
