@@ -1,0 +1,252 @@
+body {
+  font-size: 16px;
+  line-height: 150%;
+}
+.cover {
+  background-size: cover;
+}
+.main {
+  background-color: #dddbb9;
+}
+.second {
+  background-color: #BBB88A;
+}
+@media only screen and (max-width: 425px) {
+  .col-xs-12 {
+    padding: 0 7px 0 7px;
+  }
+}
+.panel {
+  border: 0;
+}
+.pan-heading {
+  background-color: #BBB88A;
+  border-color: #BBB88A;
+}
+.navbar {
+  min-height: 60px;
+  background-color: #FFFEEA;
+  border: 0;
+}
+.cur-mixin {
+  display: block;
+  padding: 15px 10px 15px 10px;
+  background-color: #BBB88A;
+  color: #000000;
+}
+.navbar-nav li {
+  padding: 0;
+}
+.navbar-nav li.current a {
+  display: block;
+  padding: 15px 10px 15px 10px;
+  background-color: #BBB88A;
+  color: #000000;
+}
+.navbar-nav li.current a:hover,
+.navbar-nav li.current a:focus,
+.navbar-nav li.current a:active,
+.navbar-nav li.current a:visited {
+  display: block;
+  padding: 15px 10px 15px 10px;
+  background-color: #BBB88A;
+  color: #000000;
+}
+.navbar-brand {
+  vertical-align: middle;
+}
+.navbar-brand h1 {
+  font-size: 32px;
+  margin-top: 0;
+  color: #000000;
+  padding: 10px 5px 10px 5px;
+}
+@media only screen and (max-width: 767px) {
+  .navbar-brand h1 {
+    padding: 0 0 0 0;
+    font-size: 24px;
+  }
+}
+.navbar-brand h1 .glyphicon-euro {
+  font-weight: bolder;
+  font-size: 35px;
+  animation: rotateY 2s linear infinite;
+}
+@media only screen and (max-width: 767px) {
+  .navbar-brand h1 .glyphicon-euro {
+    font-size: 28px;
+  }
+}
+.collapse.navbar-collapse {
+  border-color: transparent;
+}
+.navbar-collapse li {
+  padding: 15px 5px 10px 5px;
+}
+.page_wrapper {
+  background-color: #dddbb9;
+  border-radius: 10px;
+  width: 100%;
+  padding: 25px 35px 35px 35px;
+  -webkit-box-shadow: 3px 3px 1px 1px lightgrey;
+  -moz-box-shadow: 33px 3px 1px 1px lightgrey;
+  box-shadow: 3px 3px 1px 1px lightgrey;
+}
+@media only screen and (max-width: 425px) {
+  .page_wrapper {
+    padding: 25px 8px 35px 8px;
+  }
+}
+.pd-bottom-0 {
+  padding-bottom: 0px;
+}
+.pd-bottom-1 {
+  padding-bottom: 10px;
+}
+.pd-bottom-2 {
+  padding-bottom: 20px;
+}
+.pd-bottom-3 {
+  padding-bottom: 30px;
+}
+.pd-bottom-4 {
+  padding-bottom: 40px;
+}
+.pd-bottom-5 {
+  padding-bottom: 50px;
+}
+.mar-bottom-0 {
+  margin-bottom: 0px;
+}
+.mar-bottom-1 {
+  margin-bottom: 10px;
+}
+.mar-bottom-2 {
+  margin-bottom: 20px;
+}
+.mar-bottom-3 {
+  margin-bottom: 30px;
+}
+.mar-bottom-4 {
+  margin-bottom: 40px;
+}
+.mar-bottom-5 {
+  margin-bottom: 50px;
+}
+.page-header {
+  border-bottom-color: #000000;
+}
+@media only screen and (max-width: 560px) {
+  .page-header {
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+.text-bold {
+  font-weight: bold;
+}
+.right-btn {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+.relative {
+  position: relative;
+}
+.td-mixin {
+  padding: 5px 8px 5px 8px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.mar-left {
+  margin-left: 30px;
+}
+.table-div {
+  display: block;
+  width: 100%;
+}
+@media only screen and (max-width: 560px) {
+  .table-div h2:nth-of-type(1) {
+    font-size: 1.7em;
+  }
+}
+.my-table {
+  margin-left: 15px;
+  padding: 5px 8px 5px 28px;
+}
+.my-table th {
+  padding: 5px 8px 5px 8px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.my-table td {
+  padding: 5px 8px 5px 8px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+}
+@media only screen and (max-width: 535px) {
+  .my-table {
+    padding: 5px 2px 5px 2px;
+    margin-left: 0;
+  }
+  .my-table thead {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .my-table td:nth-of-type(1) {
+    width: 100%;
+    display: block;
+    position: relative;
+    margin-top: 8px;
+    background-color: #BBB88A;
+  }
+  .my-table td:nth-of-type(2) {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+  }
+  .my-table td:nth-of-type(2):before {
+    content: 'Sprzedaż';
+    font-weight: bold;
+  }
+  .my-table td:nth-of-type(3) {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+  }
+  .my-table td:nth-of-type(3):before {
+    content: 'Kupno';
+    font-weight: bold;
+  }
+  .my-table td:nth-of-type(4) {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+  }
+  .my-table td:nth-of-type(5) {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+  }
+}
+.animate-hide {
+  transition: all linear 0.5s;
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+}
+.animate-hide.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+@keyframes rotateY {
+  100% {
+    transform: rotate3d(0, 1, 0, 360deg);
+  }
+}
