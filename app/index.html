@@ -1,16 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en" ng-app="cinkciarzTraining">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trener Cinkciarza</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css"/>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-<div class="page_wrapper">
-    <section id="cinckiarz" class="container">
-        <div id="cinkciarzPlWidget"></div>
-    </section>
+
+<div ng-include="'templates/navbar.html'"></div>
+
+<div class="container">
+
+    <div ng-view></div>
 </div>
-<script type="text/javascript" src="https://cinkciarz.pl/widget/cinkciarz.widget.js"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-animate/angular-animate.js"></script>
+<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="app.js"></script>
+<script src="app.config.js"></script>
+
+<!-- Controllers-->
+<script src="js/controllers/startCtrl.js"></script>
+<script src="js/controllers/mainCtrl.js"></script>
+<script src="js/controllers/infoCtrl.js"></script>
+<script src="js/controllers/buyCtrl.js"></script>
+<script src="js/controllers/sellCtrl.js"></script>
+<script src="js/controllers/modalConfirmCtrl.js"></script>
+<script src="js/controllers/navbarCtrl.js"></script>
+<!-- Directives-->
+<script src="js/directives/backButtonDirective.js"></script>
+<!-- Services-->
+<script src="js/services/walletService.js"></script>
+<script src="js/services/currenciesService.js"></script>
+<script src="js/services/validateService.js"></script>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<section>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-sm-12">
+            <div class="page_wrapper pd-bottom-5">
+                <h2>Zakup {{buyCtrl.showTitle()}}</h2>
+
+                <div class="panel">
+                    <div class="panel-heading pan-heading"><h3 class="panel-title">Twój portfel</h3></div>
+
+                    <div class="panel-body">
+                        <h3>PLN: {{buyCtrl.wallet.PLN | number : 2}}</h3>
+                        <h3>{{buyCtrl.rate.code}}: {{buyCtrl.wallet[buyCtrl.currency] | number: 2}}</h3></div>
+                </div>
+                <h3>Kurs kupna: {{buyCtrl.rate.buy}}</h3>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="currencyValue" class="control-label col-md-3">Podaj ilośc: </label>
+                        <div class="col-md-5"><input type="number" ng-model="buyCtrl.value" class="form-control" id="currencyValue"></div>
+                    </div>
+                    <div class="form-group">
+                        <span class="control-label col-md-3 text-bold">Koszt zakupu w zł:</span>
+                        <span class="control-label lead">{{buyCtrl.buyCost() | number: 2}}</span>
+                    </div>
+                </div>
+
+                <div ng-show="buyCtrl.errorMessage" class="alert alert-danger animate-hide">
+
+                    {{buyCtrl.errorMessage}}
+                </div>
+
+
+                <button class="btn btn-success" ng-click="buyCtrl.buy()" id="sell">Kup</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-info mar-left" back-button ng-click="backToMain()">Powrót</button>
+            </div>
+        </div>
+    </div>
+</section>
