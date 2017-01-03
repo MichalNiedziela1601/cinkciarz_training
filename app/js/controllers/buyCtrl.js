@@ -1,66 +1,103 @@
 /**
  * Created by student on 06.12.16.
  */
-(function (angular) {
-    "use strict";
-    angular.module('cinkciarzTraining')
-        .controller('BuyController', BuyController);
-    function BuyController($scope, $routeParams, WalletService, MY_CONST,$timeout) {
-        var vm = this;
-        vm.currency = $routeParams.currency;
-        vm.get = WalletService['get' + vm.currency]();
-        vm.showTitle = showTitle;
-        vm.buy = buy;
-        vm.divHide = false;
-        vm.pln = WalletService.getPln();
-        vm.validateValue = validateValue;
-        vm.errorsArray = [];
+(function ()
+{
+    'use strict';
+    function BuyController($routeParams, WalletService, CurrenciesService, $timeout, ValidateService)
+    {
 
-        var clicked = false;
+        var ctrl = this;
+        ctrl.currency = $routeParams.currency;
+        ctrl.rates = {};
+        ctrl.value = 0;
+        ctrl.wallet = WalletService.getWallet();
+        ctrl.errorMessage = '';
 
-        ///////////////////////
-        function showTitle() {
-            if ($routeParams.currency === 'Eur') {
+        ///////////////////
+
+        function showTitle()
+        {
+            if ($routeParams.currency === 'EUR') {
                 return 'Euro';
-            } else if ($routeParams.currency === 'Usd') {
-                return 'Dolary'
-            } else if ($routeParams.currency === 'Gbp') {
-                return 'Funty';
+            } else if ($routeParams.currency === 'USD') {
+                return 'Dolarów';
+            } else if ($routeParams.currency === 'GBP') {
+                return 'Funtów';
             }
         }
 
-        function buy() {
-            if (validateValue()) {
+        function buy()
+        {
+            if (ValidateService.validateEmpty(ctrl.value)) {
+                ctrl.errorMessage = ValidateService.getValues('Nie wpisałeś ilości');
+                $timeout(function ()
+                {
+                    ctrl.errorMessage = ValidateService.getValues('');
+                }, 3000);
                 return;
-            }else {
-                var value = parseInt($scope.value, 10);
-                if(value * MY_CONST.EUR_BUY > vm.pln){
-                    if(!clicked) {
-                        vm.errorsArray.push('Insufficent funds');
-                        $timeout(function () {
-                            vm.errorsArray = [];
-                            $scope.value = 0;
-                            clicked = false;
-                        }, 5000);
-                        clicked = true;
-                    }
-                }else {
-                    WalletService['buy' + vm.currency](value);
-                    vm.pln = WalletService.getPln();
-                    vm.get = WalletService['get' + vm.currency]();
-                }
             }
+
+            if(ctrl.value < 0){
+                ctrl.errorMessage = ValidateService.getValues('Wpisałeś wartość poniżej zera');
+                $timeout(function ()
+                {
+                    ctrl.errorMessage = ValidateService.getValues('');
+                }, 3000);
+                return;
+            }
+
+            if (ctrl.value * ctrl.rate.buy > ctrl.wallet.PLN) {
+                ctrl.errorMessage = ValidateService.getValues('Za mało środków');
+                $timeout(function ()
+                {
+                    ctrl.errorMessage = ValidateService.getValues('');
+                }, 3000);
+            } else {
+                WalletService.buy(ctrl.rate.code, ctrl.rate.buy, ctrl.value);
+                ctrl.wallet = WalletService.getWallet();
+                ctrl.value = 0;
+            }
+
         }
 
-        function validateValue() {
-            if ($scope.value === undefined || $scope.value === '') {
-                vm.divHide = false;
-                return true;
-            } else {
-                vm.divHide = true;
-                return false;
-            }
+
+        function getCurrencies()
+        {
+            CurrenciesService.getCurrencies()
+                    .then(function (data)
+                    {
+                        ctrl.rates = data;
+                        for (var key in ctrl.rates) {
+                            if (ctrl.rates[key].code === ctrl.currency) {
+                                ctrl.rate = ctrl.rates[key];
+
+                            }
+                        }
+                        ctrl.buyCost = function ()
+                        {
+                            return (ctrl.value * ctrl.rate.buy) > 0 ? (ctrl.value * ctrl.rate.buy) : 0;
+                        };
+
+                    })
+                    .catch(function (error)
+                    {
+                        console.log('Error', error);
+                    });
         }
+
+
+        ////////////////////////
+
+        ctrl.showTitle = showTitle;
+        ctrl.buy = buy;
+        getCurrencies();
+
+
     }
 
-})(angular);
+    angular.module('cinkciarzTraining')
+            .controller('BuyController', BuyController);
+
+
+})();

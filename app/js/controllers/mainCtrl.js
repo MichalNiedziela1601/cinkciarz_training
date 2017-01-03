@@ -2,64 +2,59 @@
  * Created by sunday on 12/1/16.
  */
 
-(function (angular) {
-    "use strict";
-    angular.module('cinkciarzTraining')
-        .controller('MainCtrl', MainCtrl);
-    function MainCtrl($scope, MY_CONST, WalletService,$window,$localStorage,CurrenciesService, $http) {
-        var vm = this;
-        vm.storage = $localStorage;
+(function ()
+{
+    'use strict';
+    function MainCtrl($location, WalletService, $localStorage, CurrenciesService, $uibModal)
+    {
+        var ctrl = this;
+        ctrl.wallet = WalletService.getWallet();
+        ctrl.rates = [];
 
-        vm.pln = WalletService.getPln();
-        vm.eur = WalletService.getEur();
-        vm.usd = WalletService.getUsd();
-        vm.gbp = WalletService.getGbp();
+        ////////////////////////////////
+        function reset()
+        {
+            var modalInstance = $uibModal.open({
+                animation: true, templateUrl: 'myModalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
 
-        vm.EUR_BUY = MY_CONST.EUR_BUY;
-        vm.EUR_SEL = MY_CONST.EUR_SEL;
+            });
 
-        vm.rates = {};
+            modalInstance.result.then(function ()
+            {
+                $location.path('/');
+                WalletService.reset();
+            });
+        }
+
+        function checkCurrencyWallet(code)
+        {
+            return $localStorage.wallet[code] <= 0;
+        }
+
+
+        function getCurrencies()
+        {
+            CurrenciesService.getCurrencies()
+                    .then(function (data)
+                    {
+                        ctrl.rates = data;
+                    })
+                    .catch(function (error)
+                    {
+                        console.log('Error ', error);
+                    });
+        }
+
+        ///////////////////////////////
+
         getCurrencies();
 
-        vm.reset = reset;
-        vm.sellEur = sellEur;
-        vm.checkEur = checkEur;
+        ctrl.reset = reset;
+        ctrl.checkCurrencyWallet = checkCurrencyWallet;
         //////////////////////
 
-
-
-        function sellEur() {
-            var value = parseInt($scope.value, 10);
-            WalletService.sellEur(value);
-            vm.pln = WalletService.getPln();
-            vm.eur = WalletService.getEur();
-        }
-
-        function reset() {
-            var confirm = $window.confirm("Czy na pewno chcesz zresetowac portfel?");
-            if(confirm) {
-                WalletService.reset();
-            }
-        }
-
-        function checkEur(){
-            if($localStorage.wallet.eur > 0){
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        function getCurrencies(){
-            console.log('get currencies');
-            CurrenciesService.getCurrencies()
-                .then(function(data){
-                console.log(data);
-                vm.rates = data;
-            }, function(error){
-                console.log('Error ',error);
-            })
-        }
     }
+    angular.module('cinkciarzTraining')
+            .controller('MainCtrl', MainCtrl);
 
-})(angular);
+})();
