@@ -8,7 +8,7 @@
     function ValidateService()
     {
 
-       var errorMessage = '';
+        var errorMessage = '';
 
         this.validateEmpty = function (value)
         {

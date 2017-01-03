@@ -1,15 +1,18 @@
 /**
  * Created by student on 13.12.16.
  */
-(function(){
+(function ()
+{
     'use strict';
 
-    function ModalConfirmController($uibModalInstance)
+    function ModalConfirmController($uibModalInstance,$localStorage)
     {
+
         var ctrl = this;
 
         ctrl.ok = function ()
         {
+            $localStorage.log = [];
             $uibModalInstance.close();
         };
 
@@ -20,7 +23,7 @@
     }
 
     angular.module('cinkciarzTraining')
-        .controller('ModalConfirmController', ModalConfirmController);
+            .controller('ModalConfirmController', ModalConfirmController);
 
 
 })();

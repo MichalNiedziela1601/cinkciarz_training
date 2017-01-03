@@ -5,11 +5,11 @@
 {
     'use strict';
 
-    function SellController($routeParams, WalletService, CurrenciesService, $timeout, ValidateService)
+    function SellController($routeParams, WalletService, $timeout, ValidateService, RatesFactory)
     {
         var ctrl = this;
         ctrl.currency = $routeParams.currency;
-        ctrl.rates = {};
+        ctrl.rate = {};
         ctrl.value = 0;
 
         ctrl.wallet = WalletService.getWallet();
@@ -39,7 +39,7 @@
                 return;
             }
 
-            if(ctrl.value < 0){
+            if (ctrl.value < 0) {
                 ctrl.errorMessage = ValidateService.getValues('Wpisałeś wartość poniżej zera');
                 $timeout(function ()
                 {
@@ -48,10 +48,10 @@
                 return;
             }
             if (ctrl.value > ctrl.wallet[ctrl.currency]) {
-                ctrl.validObject = ValidateService.getValues(true, 'Za mało środków');
+                ctrl.errorMessage = ValidateService.getValues('Za mało środków');
                 $timeout(function ()
                 {
-                    ctrl.validObject = ValidateService.getValues(false, '');
+                    ctrl.errorMessage = ValidateService.getValues('');
                 }, 3000);
 
             } else {
@@ -64,22 +64,15 @@
 
         function getCurrencies()
         {
-            CurrenciesService.getCurrencies()
-                    .then(function (data)
-                    {
-                        var rates = data;
-                        for (var key in rates) {
-                            if (rates[key].code === ctrl.currency) {
-                                ctrl.rate = rates[key];
-                            }
-                        }
-                        ctrl.sellCost = sellCost;
+            ctrl.rates = RatesFactory.getRates();
+            angular.forEach(ctrl.rates, function (rate)
+            {
+                if (rate.code === ctrl.currency) {
+                    ctrl.rate = rate;
+                }
+            });
+            ctrl.sellCost = sellCost;
 
-                    })
-                    .catch(function (error)
-                    {
-                        console.log('Error ', error);
-                    });
         }
 
         function sellCost()

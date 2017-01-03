@@ -4,12 +4,12 @@
 (function ()
 {
     'use strict';
-    function BuyController($routeParams, WalletService, CurrenciesService, $timeout, ValidateService)
+    function BuyController($routeParams, WalletService, $timeout, ValidateService, RatesFactory)
     {
 
         var ctrl = this;
         ctrl.currency = $routeParams.currency;
-        ctrl.rates = {};
+        ctrl.rates = RatesFactory.getRates();
         ctrl.value = 0;
         ctrl.wallet = WalletService.getWallet();
         ctrl.errorMessage = '';
@@ -38,7 +38,7 @@
                 return;
             }
 
-            if(ctrl.value < 0){
+            if (ctrl.value < 0) {
                 ctrl.errorMessage = ValidateService.getValues('Wpisałeś wartość poniżej zera');
                 $timeout(function ()
                 {
@@ -64,30 +64,23 @@
 
         function getCurrencies()
         {
-            CurrenciesService.getCurrencies()
-                    .then(function (data)
-                    {
-                        ctrl.rates = data;
-                        for (var key in ctrl.rates) {
-                            if (ctrl.rates[key].code === ctrl.currency) {
-                                ctrl.rate = ctrl.rates[key];
 
-                            }
-                        }
-                        ctrl.buyCost = function ()
-                        {
-                            return (ctrl.value * ctrl.rate.buy) > 0 ? (ctrl.value * ctrl.rate.buy) : 0;
-                        };
+            ctrl.rates = RatesFactory.getRates();
+            angular.forEach(ctrl.rates, function (rate)
+            {
+                if (rate.code === ctrl.currency) {
+                    ctrl.rate = rate;
+                }
+            });
 
-                    })
-                    .catch(function (error)
-                    {
-                        console.log('Error', error);
-                    });
+            ctrl.buyCost = function ()
+            {
+                return (ctrl.value * ctrl.rate.buy) > 0 ? (ctrl.value * ctrl.rate.buy) : 0;
+            };
+
         }
 
-
-        ////////////////////////
+////////////////////////
 
         ctrl.showTitle = showTitle;
         ctrl.buy = buy;

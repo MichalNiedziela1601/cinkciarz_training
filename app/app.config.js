@@ -7,27 +7,27 @@
     function config($routeProvider) {
         $routeProvider
                 .when('/',{
-                    templateUrl: 'templates/start.html',
+                    templateUrl: 'views/start.html',
                     controller: 'StartController',
                     controllerAs: 'startCtrl'
                 })
                 .when('/main', {
-                    templateUrl: 'templates/main.html',
+                    templateUrl: 'views/main.html',
                     controller: 'MainCtrl',
                     controllerAs: 'mainCtrl'
                 })
                 .when('/info', {
-                    templateUrl: 'templates/info.html',
+                    templateUrl: 'views/info.html',
                     controller: 'InfoController',
                     controllerAs: 'infoCtrl'
                 })
                 .when('/buy/:currency', {
-                    templateUrl: 'templates/buy.html',
+                    templateUrl: 'views/buy.html',
                     controller: 'BuyController',
                     controllerAs: 'buyCtrl'
                 })
                 .when('/sell/:currency',{
-                    templateUrl: 'templates/sell.html',
+                    templateUrl: 'views/sell.html',
                     controller: 'SellController',
                     controllerAs: 'sellCtrl'
                 })

@@ -1,0 +1,111 @@
+<section id="main">
+
+    <div class="row">
+        <div class="page_wrapper clearfix">
+            <div class=" pd-bottom-5">
+                <div>
+                    <div class="page-header">
+                        <h1>Kantor</h1>
+                    </div>
+                    <div class="relative pd-bottom-3">
+
+                        <div class="panel panel-no-border">
+                            <div class="panel-heading pan-heading"><h2>Mój portfel</h2></div>
+
+                            <div class="panel-body">
+                                <div ng-repeat="(key, value) in mainCtrl.wallet">
+                                    <h4 ng-show="value > 0 ? true : false"><span class="text-bold">{{key}}</span>: {{value | number:2}} </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-btn">
+                            <button ng-click="mainCtrl.reset()" class="btn btn-danger">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="relative">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="table-div">
+                                <h2>Kantor - kursy z dnia:</h2>
+                                <p>
+                                <h2>{{mainCtrl.rates[0].date}}</h2></p>
+                                <div>
+                                    <label for='random' class="control-label">Włącz random: </label>
+                                    <input type="checkbox" id="random" ng-click="mainCtrl.toggleRandomRates()" ng-checked="mainCtrl.isRandom()">
+                                    <table class="my-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Waluta</th>
+                                            <th>Kupno</th>
+                                            <th>Sprzedaż</th>
+                                        </tr>
+                                        </thead>
+                                        <tr ng-repeat="rate in mainCtrl.rates track by $index">
+                                            <td><p class="text-bold">{{rate.code}} </p></td>
+                                            <td><p>{{rate.buy | number: 4}} PLN
+                                                <span ng-if="mainCtrl.showArrows"
+                                                      ng-class="mainCtrl.diffBuy(rate.code, rate.buy)
+                                                      ? ['triangle-up','color-border-bottom-red']
+                                                      : ['triangle-down','color-border-top-green']"></span>
+                                            </p> </td>
+                                            <td><p>{{rate.sell | number:4}} PLN
+                                                <span ng-if="mainCtrl.showArrows"
+                                                      ng-class="mainCtrl.diffSell(rate.code, rate.sell)
+                                                      ? ['triangle-up','color-border-bottom-green']
+                                                      : ['triangle-down','color-border-top-red']"></span></p></td>
+                                            <td><a ng-href="#/buy/{{rate.code}}">
+                                                <button class="btn btn-success" ng-click="mainCtrl.stopRandom()">Kupno</button>
+                                            </a></td>
+                                            <td><a ng-href="#/sell/{{rate.code}}">
+                                                <button class="btn btn-primary" ng-click="mainCtrl.stopRandom()"
+                                                        ng-hide="mainCtrl.checkCurrencyWallet(rate.code)">
+                                                    Sprzedaż
+                                                </button>
+                                            </a></td>
+                                        </tr>
+
+
+                                        <tr ng-hide="true">
+                                            <td><p class="text-bold">{{mainCtrl.rates[0].code}} </p></td>
+                                            <td><p>{{mainCtrl.rates[0].buy}} PLN</p></td>
+                                            <td><p>{{mainCtrl.rates[0].sell}} PLN</p></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="panel main">
+                                <div class="panel-heading second">
+                                    <h3>Histori transakcji</h3>
+                                </div>
+                                <div class="panel-body panel-scroll">
+                                    <ul ng-repeat="log in mainCtrl.logs track by $index" class="list-unstyled">
+                                        <li>{{$index + 1}}. Dnia {{log.date | date: 'dd-MM-yy HH:mm'}} {{log.message}}</li>
+                                    </ul>
+                                </div>
+                                <div class="panel-footer second"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/ng-template" id="myModalConfirm.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Czy na pewno chcesz zrestartować portfel?</h3>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Cancel</button>
+    </div>
+</script>
+

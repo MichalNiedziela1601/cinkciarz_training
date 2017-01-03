@@ -22,8 +22,10 @@
                     urlsCalls.push($http.get(url.url));
                 });
                 return $q.all(urlsCalls)
-                        .then(function(result){
-                            angular.forEach(result, function(rate){
+                        .then(function (result)
+                        {
+                            angular.forEach(result, function (rate)
+                            {
                                 var currency = {};
                                 currency.code = rate.data.code;
                                 currency.sell = rate.data.rates[0].bid;
@@ -33,14 +35,11 @@
                             });
                             return rates;
                         });
-
             }
-
         };
     }
 
     angular.module('cinkciarzTraining').factory('CurrenciesService', CurrenciesService);
-
 
 
 })();

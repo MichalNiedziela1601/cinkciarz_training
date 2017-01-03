@@ -5,9 +5,8 @@
 {
     'use strict';
 
-    function WalletService($localStorage)
+    function WalletService($localStorage, LogFactory)
     {
-
         this.getWallet = function ()
         {
             return $localStorage.wallet;
@@ -17,12 +16,14 @@
         {
             $localStorage.wallet.PLN += (rate * value);
             $localStorage.wallet[code] -= value;
+            LogFactory.addLog('Sprzedałeś ' + value + ' ' + code + ' zyskując ' + (rate * value).toFixed(2) + ' zł');
         };
 
         this.buy = function (code, rate, value)
         {
             $localStorage.wallet[code] += value;
             $localStorage.wallet.PLN -= (rate * value);
+            LogFactory.addLog('Kupiłeś ' + value + ' ' + code + ' za ' + (rate * value).toFixed(2) + ' zł');
         };
 
         this.reset = function ()

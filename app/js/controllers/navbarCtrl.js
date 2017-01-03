@@ -1,18 +1,22 @@
 /**
  * Created by student on 13.12.16.
  */
-(function(){
+(function ()
+{
     'use strict';
 
-    function NavbarController($location){
+    function NavbarController($location)
+    {
         var ctrl = this;
         ctrl.navCollapsed = true;
 
-        function toggleCollapse(){
+        function toggleCollapse()
+        {
             ctrl.navCollapsed = !ctrl.navCollapsed;
         }
 
-        function isActive(location){
+        function isActive(location)
+        {
             var active = (location === $location.path());
             return active;
         }
@@ -23,7 +27,7 @@
     }
 
     angular.module('cinkciarzTraining')
-        .controller('NavbarController', NavbarController);
+            .controller('NavbarController', NavbarController);
 
 
 })();
