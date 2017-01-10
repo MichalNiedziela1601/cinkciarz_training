@@ -4,13 +4,13 @@
             <h3 class="modal-title" id="modal-title">Podaj ilość początkową PLN</h3>
         </div>
         <div class="modal-body" id="modal-body">
-            <div ng-hide="ctrl.divHide" class="allert alert-danger mar-bottom-2 text-center">
-                {{ctrl.message}}
+            <div ng-hide="startModal.divHide" class="allert alert-danger mar-bottom-2 text-center">
+                {{startModal.message}}
             </div>
-            <input type="number" class="col-md-6 col-sm-6 input-modal" ng-model="ctrl.value">
+            <input type="number" class="col-md-6 col-sm-6 input-modal" ng-model="startModal.value">
         </div>
         <div class="modal-footer text-center">
-            <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">OK</button>
+            <button class="btn btn-primary" type="button" ng-click="startModal.ok()">OK</button>
         </div>
     </script>
 </div>

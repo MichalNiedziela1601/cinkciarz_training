@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div ng-include="'templates/navbar.html'"></div>
+<div ng-include="'views/navbar.html'"></div>
 
 <div class="container">
 
@@ -25,6 +25,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="app.js"></script>
 <script src="app.config.js"></script>
+<script src="app.run.js"></script>
 
 <!-- Controllers-->
 <script src="js/controllers/startCtrl.js"></script>
@@ -40,5 +41,8 @@
 <script src="js/services/walletService.js"></script>
 <script src="js/services/currenciesService.js"></script>
 <script src="js/services/validateService.js"></script>
+<script src="js/services/randomCurrencyService.js"></script>
+<script src="js/services/ratesFactory.js"></script>
+<script src="js/services/logFactory.js"></script>
 </body>
 </html>

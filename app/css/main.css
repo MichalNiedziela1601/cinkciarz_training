@@ -2,9 +2,6 @@ body {
   font-size: 16px;
   line-height: 150%;
 }
-.cover {
-  background-size: cover;
-}
 .main {
   background-color: #dddbb9;
 }
@@ -16,7 +13,7 @@ body {
     padding: 0 7px 0 7px;
   }
 }
-.panel {
+.panel-no-border {
   border: 0;
 }
 .pan-heading {
@@ -88,8 +85,6 @@ body {
   border-radius: 10px;
   width: 100%;
   padding: 25px 35px 35px 35px;
-  -webkit-box-shadow: 3px 3px 1px 1px lightgrey;
-  -moz-box-shadow: 33px 3px 1px 1px lightgrey;
   box-shadow: 3px 3px 1px 1px lightgrey;
 }
 @media only screen and (max-width: 425px) {
@@ -163,7 +158,7 @@ body {
   margin-left: 30px;
 }
 .table-div {
-  display: block;
+  display: table;
   width: 100%;
 }
 @media only screen and (max-width: 560px) {
@@ -175,6 +170,9 @@ body {
   margin-left: 15px;
   padding: 5px 8px 5px 28px;
 }
+.my-table thead tr {
+  border: 0;
+}
 .my-table th {
   padding: 5px 10px 10px 8px;
   text-align: center;
@@ -182,12 +180,14 @@ body {
   font-size: 16px;
   background-color: #ccc997;
 }
+.my-table tr {
+  border-bottom: 1px solid black;
+}
 .my-table td {
   padding: 5px 10px 10px 8px;
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
-  border-bottom: 1px solid black;
 }
 @media only screen and (max-width: 535px) {
   .my-table {
@@ -235,6 +235,34 @@ body {
     position: relative;
   }
 }
+.triangle-up {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid;
+}
+.triangle-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid;
+}
+.color-border-bottom-red {
+  border-bottom-color: red;
+}
+.color-border-top-green {
+  border-top-color: green;
+}
+.color-border-top-red {
+  border-top-color: red;
+}
+.color-border-bottom-green {
+  border-bottom-color: green;
+}
 .animate-hide {
   transition: all linear 0.5s;
   line-height: 20px;
@@ -256,6 +284,19 @@ body {
 .input-modal {
   margin-top: -5px;
   width: 100%;
+}
+.panel-scroll {
+  overflow-y: scroll;
+  max-height: 300px;
+}
+.panel-scroll::-webkit-scrollbar {
+  width: 12px;
+}
+.panel-scroll::-webkit-scrollbar-track {
+  background-color: #d0cd9e;
+}
+.panel-scroll::-webkit-scrollbar-thumb {
+  background-color: #BBB88A;
 }
 @keyframes rotateY {
   100% {

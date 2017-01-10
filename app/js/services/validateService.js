@@ -1,6 +1,3 @@
-/**
- * Created by student on 13.12.16.
- */
 (function ()
 {
     'use strict';
@@ -8,7 +5,7 @@
     function ValidateService()
     {
 
-       var errorMessage = '';
+        var errorMessage = '';
 
         this.validateEmpty = function (value)
         {
