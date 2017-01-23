@@ -37,6 +37,7 @@
         "before": true,
         "it": true,
         "expect": true,
-        "angular" : false
+        "inject" : true,
+        "angular" : true
     }
 }

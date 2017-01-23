@@ -17,6 +17,16 @@
     "browser-sync": "2.18.2",
     "gulp": "3.9.1",
     "gulp-gh-pages": "0.5.4",
-    "gulp-less": "3.3.0"
+    "gulp-jasmine": "^2.4.2",
+    "gulp-karma": "0.0.5",
+    "gulp-less": "3.3.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-cli": "^1.0.1",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-ng-html2js-preprocessor": "^1.0.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-spec-reporter": "0.0.26"
   }
 }

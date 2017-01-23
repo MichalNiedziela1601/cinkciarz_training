@@ -22,7 +22,8 @@
 
         }
 
-        getCurrencies();
+
+        ctrl.getCurrencies = getCurrencies();
 
 
         ctrl.open = function ()

@@ -30,6 +30,7 @@
                                 currency.date = rate.data.rates[0].effectiveDate;
                                 rates.push(currency);
                             });
+                            console.log('q.all',rates);
                             return rates;
                         });
             }
