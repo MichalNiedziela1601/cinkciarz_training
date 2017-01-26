@@ -8,16 +8,31 @@ describe('StartCtrl', function ()
     var $uibModalMock;
     var $sessionStorageMock;
     var CurrenciesServiceMock;
+    var modalResult;
 
 
     beforeEach(module('cinkciarzTraining'));
 
-    beforeEach(inject(function($controller,_$localStorage_,_$location_, _$uibModal_, _$sessionStorage_, CurrenciesService){
+    beforeEach(inject(function ($controller, _$localStorage_, _$location_, _$sessionStorage_, CurrenciesService)
+    {
         $localStorageMock = _$localStorage_;
         $locationMock = _$location_;
-        $uibModalMock = _$uibModal_;
         $sessionStorageMock = _$sessionStorage_;
         CurrenciesServiceMock = CurrenciesService;
+
+        modalResult = {
+            then: function (callback)
+            {
+                callback(1000); // passing fake value as result
+            }
+        };
+
+        $uibModalMock = {
+            open: function ()
+            {}
+        };
+
+        spyOn($uibModalMock, 'open').and.returnValue({result: modalResult});
 
 
         startCtrl = $controller('StartController', {
@@ -27,8 +42,15 @@ describe('StartCtrl', function ()
             $sessionStorage: $sessionStorageMock,
             CurrenciesService: CurrenciesServiceMock
         });
+        spyOn(startCtrl, 'checkStorage');
+        spyOn(startCtrl, 'open');
 
     }));
+    afterEach(function ()
+    {
+        $localStorageMock.$reset();
+    });
+
 
     describe('initialization', function ()
     {
@@ -37,8 +59,71 @@ describe('StartCtrl', function ()
         {
             expect($sessionStorageMock.isRandom).toBeFalsy();
         });
+        it('should call checkStorage', function ()
+        {
+            expect(startCtrl.checkStorage).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('open', function ()
+    {
+        describe('when success', function ()
+        {
+            beforeEach(function ()
+            {
+                startCtrl.open();
+            });
+            afterEach(function ()
+            {
+                startCtrl.startVal = undefined;
+            });
+            it('should uibModal.open call', function ()
+            {
+
+                expect($uibModalMock.open).toHaveBeenCalled();
+            });
+            it('should set startVal', function ()
+            {
+                expect(startCtrl.startVal).toBe(1000);
+            });
+            it('should should set $localstorage.wallet.PLN', function ()
+            {
+                expect($localStorageMock.wallet.PLN).toEqual(1000);
+            });
+        });
 
 
+    });
 
+    describe('checkStorage', function ()
+    {
+        describe('when $wallet is undefined', function ()
+        {
+            beforeEach(function ()
+            {
+                $localStorageMock.$reset();
+                startCtrl.checkStorage();
+            });
+            it('should call open', function ()
+            {
+
+                console.log($localStorageMock.wallet);
+                expect(startCtrl.open).toHaveBeenCalledWith('sm');
+            });
+        });
+    });
+    describe('when wallet defined', function ()
+    {
+        beforeEach(function ()
+        {
+            console.log($localStorageMock.wallet);
+            startCtrl.checkStorage();
+        });
+        it('should location to main', function ()
+        {
+            spyOn($locationMock, 'path');
+            expect($locationMock.path).toHaveBeenCalledWith('/main');
+        });
     });
 });
