@@ -3,10 +3,10 @@ describe('RandomCurrencyService', function ()
     'use strict';
 
     var RatesFactoryMock;
-    var CurrenciesServiceMock;
     var rates;
     var Random;
     var ratesOriginal;
+    var sessionStorage;
 
     function generateMath(val)
     {
@@ -14,10 +14,7 @@ describe('RandomCurrencyService', function ()
     }
 
     beforeEach(module('cinkciarzTraining'));
-    beforeEach(inject(function(_RandomCurrencyService_, _RatesFactory_, _CurrenciesService_){
-        RatesFactoryMock = _RatesFactory_;
-        CurrenciesServiceMock = _CurrenciesService_;
-        Random = _RandomCurrencyService_;
+    beforeEach(inject(function(_RandomCurrencyService_, _RatesFactory_, _$sessionStorage_){
 
         rates = [{
             buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
@@ -35,49 +32,33 @@ describe('RandomCurrencyService', function ()
             buy: 5.223, code: 'GBP', date: '2017-01-20', sell: 5.1216
         }];
 
+        sessionStorage = _$sessionStorage_;
+        RatesFactoryMock = _RatesFactory_;
+
+        Random = _RandomCurrencyService_;
 
         spyOn(RatesFactoryMock, 'getRates').and.returnValue(rates);
+        spyOn(Random, 'getOrginalRates').and.returnValue(ratesOriginal);
 
         Random.randomRates = RatesFactoryMock.getRates();
-        Random.getOrginalRates();
+        Random.orginalRates =  Random.getOrginalRates();
+
     }));
+    afterEach(function ()
+    {
+        sessionStorage.$reset();
+    });
 
     describe('initialization', function ()
     {
         it('should set randomRates', function ()
         {
+
             expect(Random.randomRates).toEqual(rates);
         });
-        describe('when getCurrencies success', function ()
+        it('should set orginalRates', function ()
         {
-            beforeEach(function ()
-            {
-                spyOn(CurrenciesServiceMock, 'getCurrencies').and.callFake(function ()
-                {
-                    return successfulPromise(ratesOriginal);
-                });
-                Random.getOrginalRates();
-            });
-            it('should set orginalRates', function ()
-            {
-                expect(Random.orginalRates).toEqual(ratesOriginal);
-            });
-        });
-        describe('when getCurrencies fail', function ()
-        {
-            beforeEach(function ()
-            {
-                spyOn(CurrenciesServiceMock, 'getCurrencies').and.callFake(function ()
-                {
-                    return unsuccessfulPromise();
-                });
-                spyOn(console,'log');
-                Random.getOrginalRates();
-            });
-            it('should call console.log', function ()
-            {
-                expect(console.log).toHaveBeenCalled();
-            });
+            expect(Random.orginalRates).toEqual(ratesOriginal);
         });
 
     });
@@ -153,11 +134,6 @@ describe('RandomCurrencyService', function ()
         beforeEach(function ()
         {
             spyOn(RatesFactoryMock, 'addRates');
-            spyOn(CurrenciesServiceMock, 'getCurrencies').and.callFake(function ()
-            {
-                return successfulPromise(ratesOriginal);
-            });
-            Random.getOrginalRates();
             generateMath(0.3);
             Random.setRandomRates();
         });

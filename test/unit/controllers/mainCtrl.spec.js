@@ -7,7 +7,6 @@ describe('MainCtrl', function ()
     var walletMock;
     var localStorageMock;
     var RandomMock;
-    var interval;
     var sessionStorageMock;
     var RatesMock;
     var LogMock;
@@ -18,50 +17,63 @@ describe('MainCtrl', function ()
     var scope;
     var $uibModalMock;
     var fakeModal;
+    var CurrenciesServiceMock;
+    var $interval;
 
 
-    beforeEach(module('cinkciarzTraining'));
+    ratesMock = [{
+        buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
+    }, {
+        buy: 4.4112, code: 'EUR', date: '2017-01-20', sell: 4.3238
+    }, {
+        buy: 5.123, code: 'GBP', date: '2017-01-20', sell: 5.0216
+    }];
+
+
+    beforeEach(module('cinkciarzTraining', function ($provide)
+    {
+        $provide.value('CurrenciesService', {
+            getCurrencies: jasmine.createSpy('getCurrencies').and.callFake(function ()
+            {
+                return successfulPromise(ratesMock);
+            })
+        });
+    }));
     beforeEach(
             inject(function ($controller, _$location_, _WalletService_, _$localStorage_, _RandomCurrencyService_, _$interval_, _$sessionStorage_, _LogFactory_,
-                             _RatesFactory_, _$uibModal_, $rootScope)
+                             _RatesFactory_, _$uibModal_, $rootScope, _CurrenciesService_)
             {
                 location = _$location_;
                 walletMock = _WalletService_;
                 localStorageMock = _$localStorage_;
                 RandomMock = _RandomCurrencyService_;
-                interval = _$interval_;
                 sessionStorageMock = _$sessionStorage_;
                 RatesMock = _RatesFactory_;
                 LogMock = _LogFactory_;
                 $uibModalMock = _$uibModal_;
                 scope = $rootScope.$new();
+                CurrenciesServiceMock = _CurrenciesService_;
+                $interval = _$interval_;
 
                 fakeModal = {
                     result: {
-                        then: function(confirmCallback, cancelCallback) {
+                        then: function (confirmCallback, cancelCallback)
+                        {
                             //Store the callbacks for later when the user clicks on the OK or Cancel button of the dialog
                             this.confirmCallBack = confirmCallback;
                             this.cancelCallback = cancelCallback;
                         }
-                    },
-                    close: function( item ) {
+                    }, close: function (item)
+                    {
                         //The user clicked OK on the modal dialog, call the stored confirm callback with the selected item
-                        this.result.confirmCallBack( item );
-                    },
-                    dismiss: function( type ) {
+                        this.result.confirmCallBack(item);
+                    }, dismiss: function (type)
+                    {
                         //The user clicked cancel on the modal dialog, call the stored cancel callback
-                        this.result.cancelCallback( type );
+                        this.result.cancelCallback(type);
                     }
                 };
 
-
-                ratesMock = [{
-                    buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
-                }, {
-                    buy: 4.4112, code: 'EUR', date: '2017-01-20', sell: 4.3238
-                }, {
-                    buy: 5.123, code: 'GBP', date: '2017-01-20', sell: 5.0216
-                }];
 
                 ratesRandom = [{
                     buy: 4.2635, code: 'USD', date: '2017-01-20', sell: 4.1811
@@ -81,13 +93,12 @@ describe('MainCtrl', function ()
                 spyOn(RatesMock, 'getRates').and.returnValue(ratesMock);
                 spyOn(LogMock, 'getLog').and.returnValue(logMock);
 
-
                 MainMock = $controller('MainCtrl', {
                     $location: location,
                     WalletService: walletMock,
                     $localStorage: localStorageMock,
                     RandomCurrencyService: RandomMock,
-                    $interval: interval,
+                    $interval: $interval,
                     $sessionStorage: sessionStorageMock,
                     RatesFactory: RatesMock,
                     LogFactory: LogMock,
@@ -249,18 +260,35 @@ describe('MainCtrl', function ()
         });
     });
 
-    /*describe('setRandomRates', function ()
-    {
+   /* describe('setRandomRates', function ()
+    { var $inter;
         beforeEach(function ()
         {
-            spyOn(RandomMock, 'setRandomRates');
-            spyOn(MainMock, 'getRandomRates');
-            MainMock.setRandomRates();
+
+            
+            angular.mock.inject(function (_$interval_)
+            {
+                $inter = _$interval_;
+            });
+           
         });
+      
         it('should call RandomCurrencyService.setRandomRates', function ()
         {
-            interval.flush(100);
+            MainMock.setRandomRates();
+            spyOn(RandomMock, 'setRandomRates');
+            $inter.flush(10);
             expect(RandomMock.setRandomRates).toHaveBeenCalled();
+        });
+        it('should call getRandomRates', function ()
+        {
+            expect(MainMock.getRandomRates).toHaveBeenCalled();
+        });
+        it('should set showArrows to true', function ()
+        {
+            expect(MainMock.showArrows).toBe(false);
+            scope.$apply();
+            expect(MainMock.showArrows).toBe();
         });
 
 
@@ -334,5 +362,92 @@ describe('MainCtrl', function ()
             expect(MainMock.logs).toEqual(logMock);
         });
 
+    });
+
+    describe('diffBuy', function ()
+    {
+        describe('when buy is greaten for old buy', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesMock);
+            });
+            it('should return true', function ()
+            {
+                expect(MainMock.diffBuy('USD',ratesRandom[0].buy)).toBe(true);
+            });
+        });
+
+        describe('when buy is not greaten for old buy', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesRandom);
+            });
+            it('should return false', function ()
+            {
+                expect(MainMock.diffBuy('EUR', ratesRandom[1].buy)).toBe(false);
+            });
+        });
+    });
+    describe('diffSell', function ()
+    {
+        describe('when sell is greaten for old sell', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesMock);
+            });
+            it('should return true', function ()
+            {
+                expect(MainMock.diffSell('USD',ratesRandom[0].sell)).toBe(true);
+            });
+        });
+
+        describe('when sell is not greaten for old sell', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesRandom);
+            });
+            it('should return false', function ()
+            {
+                expect(MainMock.diffSell('EUR', ratesRandom[1].sell)).toBe(false);
+            });
+        });
+    });
+
+    describe('findRate', function ()
+    {
+        describe('when oldRates not null', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesMock);
+
+            });
+            it('should call findOldRates', function ()
+            {
+                MainMock.findRate(ratesMock[1]);
+                expect(RatesMock.getOldRates).toHaveBeenCalled();
+            });
+            it('should return rate for currency code', function ()
+            {
+                expect(MainMock.findRate(ratesMock[0].code)).toEqual(ratesMock[0]);
+                expect(MainMock.findRate(ratesMock[2].code)).toEqual(ratesMock[2]);
+            });
+        });
+
+        describe('when oldRates null', function ()
+        {
+            beforeEach(function ()
+            {
+                spyOn(RatesMock, 'getOldRates').and.returnValue([]);
+            });
+            it('should return undefined ', function ()
+            {
+                expect(MainMock.findRate(ratesMock[0].code)).toBeUndefined();
+            });
+        });
     });
 });
