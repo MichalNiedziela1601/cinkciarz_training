@@ -45,8 +45,10 @@
 
         ctrl.setRandomRates = function()
         {
+
             ctrl.stop = $interval(function ()
             {
+                console.log('setRandom');
                 RandomCurrencyService.setRandomRates();
                 ctrl.getRandomRates();
                 ctrl.showArrows = true;
@@ -105,14 +107,14 @@
 
         ctrl.findRate = function(code)
         {
-            var old = RatesFactory.getOldRates();
-            if (0 === old.length) {
+            ctrl.old = RatesFactory.getOldRates();
+            if (0 === ctrl.old.length) {
                 return;
             }
-            for (var i = 0; i < old.length; i++) {
+            for (var i = 0; i < ctrl.old.length; i++) {
 
-                if (old[i].code === code) {
-                    return old[i];
+                if (ctrl.old[i].code === code) {
+                    return ctrl.old[i];
                 }
             }
         };

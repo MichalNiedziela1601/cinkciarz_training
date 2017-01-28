@@ -2,24 +2,16 @@
 {
     'use strict';
 
-    function RandomCurrencyService(RatesFactory, CurrenciesService)
+    function RandomCurrencyService(RatesFactory, $sessionStorage)
     {
         var ctrl = this;
         this.randomRates = RatesFactory.getRates();
-        this.getOrginalRates = function(){
-            CurrenciesService.getCurrencies()
-                    .then(function (data)
-                    {
-                        ctrl.orginalRates = data;
-                    })
-                    .catch(function (error)
-                    {
-                        console.log('Error occured', error);
-                    });
+
+        this.getOrginalRates = function ()
+        {
+             return $sessionStorage.rates;
         };
-        this.getOrginalRates();
-
-
+        this.orginalRates = this.getOrginalRates();
 
         this.randomValue = function ()
         {
@@ -58,7 +50,6 @@
 
         this.setRandomRates = function ()
         {
-
             for (var i = 0; i < this.orginalRates.length; i++) {
                 var randomBuy = parseFloat(this.randomOperations(this.orginalRates[i].buy));
                 this.randomRates[i].buy = randomBuy;
@@ -93,7 +84,6 @@
 
     }
 
-    angular.module('cinkciarzTraining')
-            .service('RandomCurrencyService', RandomCurrencyService);
+    angular.module('cinkciarzTraining').service('RandomCurrencyService', RandomCurrencyService);
 
 })();
