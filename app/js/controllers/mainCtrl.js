@@ -48,6 +48,7 @@
 
             ctrl.stop = $interval(function ()
             {
+                console.log('setRandom');
                 RandomCurrencyService.setRandomRates();
                 ctrl.getRandomRates();
                 ctrl.showArrows = true;
