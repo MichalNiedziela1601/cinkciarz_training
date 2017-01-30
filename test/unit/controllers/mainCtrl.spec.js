@@ -19,6 +19,8 @@ describe('MainCtrl', function ()
     var fakeModal;
     var CurrenciesServiceMock;
     var $interval;
+    var $intervalSpy;
+    var newRandomRates;
 
 
     ratesMock = [{
@@ -82,6 +84,13 @@ describe('MainCtrl', function ()
                 }, {
                     buy: 5.223, code: 'GBP', date: '2017-01-20', sell: 5.1216
                 }];
+                newRandomRates = [{
+                    buy: 4.1655, code: 'USD', date: '2017-01-20', sell: 4.1111
+                }, {
+                    buy: 4.3912, code: 'EUR', date: '2017-01-20', sell: 4.4838
+                }, {
+                    buy: 5.293, code: 'GBP', date: '2017-01-20', sell: 5.1616
+                }];
 
                 wallet = {
                     PLN: 1000, USD: 100, EUR: 100, GBP: 0
@@ -92,6 +101,7 @@ describe('MainCtrl', function ()
                 spyOn(walletMock, 'getWallet').and.returnValue(wallet);
                 spyOn(RatesMock, 'getRates').and.returnValue(ratesMock);
                 spyOn(LogMock, 'getLog').and.returnValue(logMock);
+                $intervalSpy = jasmine.createSpy('$interval', _$interval_ ).and.callThrough();
 
                 MainMock = $controller('MainCtrl', {
                     $location: location,
@@ -260,39 +270,28 @@ describe('MainCtrl', function ()
         });
     });
 
-   /* describe('setRandomRates', function ()
-    { var $inter;
+    describe('setRandomRates', function ()
+    {
         beforeEach(function ()
         {
-
-            
-            angular.mock.inject(function (_$interval_)
-            {
-                $inter = _$interval_;
-            });
-           
+            spyOn(RandomMock, 'setRandomRates');
+            spyOn(MainMock, 'getRandomRates').and.callFake(function(){ return newRandomRates; });
+            MainMock.setRandomRates();
+            $intervalSpy.flush(5000);
         });
       
         it('should call RandomCurrencyService.setRandomRates', function ()
         {
-            MainMock.setRandomRates();
-            spyOn(RandomMock, 'setRandomRates');
-            $inter.flush(10);
             expect(RandomMock.setRandomRates).toHaveBeenCalled();
         });
-        it('should call getRandomRates', function ()
-        {
-            expect(MainMock.getRandomRates).toHaveBeenCalled();
-        });
+
         it('should set showArrows to true', function ()
         {
-            expect(MainMock.showArrows).toBe(false);
-            scope.$apply();
-            expect(MainMock.showArrows).toBe();
+            expect(MainMock.showArrows).toBe(true);
         });
 
 
-    });*/
+    });
 
     describe('isRandom', function ()
     {
