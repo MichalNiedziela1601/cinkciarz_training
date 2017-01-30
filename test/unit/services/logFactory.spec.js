@@ -4,6 +4,7 @@ describe('LogFactory', function ()
     var LogFactory;
     var storage;
     var LogObj;
+    var baseTime;
 
     beforeEach(module('cinkciarzTraining'));
     beforeEach(inject(function (_LogFactory_, $localStorage)
@@ -19,6 +20,10 @@ describe('LogFactory', function ()
 
         LogFactory = _LogFactory_;
         LogFactory.logArr = storage.log;
+        baseTime = new Date();
+        spyOn(window, 'Date').and.callFake(function() {
+            return baseTime;
+        });
 
     }));
     afterEach(function ()
@@ -40,7 +45,7 @@ describe('LogFactory', function ()
         {
             LogFactory.addLog('buy some');
             expect(LogFactory.logArr[0].message).toEqual('buy some');
-            expect(LogFactory.logArr[0].date).toEqual(new Date());
+            expect(LogFactory.logArr[0].date).toEqual(baseTime);
         });
     });
 
@@ -60,7 +65,6 @@ describe('LogFactory', function ()
         it('should return array', function ()
         {
             var array = LogFactory.getLog();
-            var object = {message: 'something', date: date};
             expect(array[0]).toBeObject();
         });
     });

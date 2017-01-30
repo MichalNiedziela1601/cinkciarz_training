@@ -10,7 +10,24 @@ describe('SellController', function ()
     var rates;
     var $localStorage;
 
-    beforeEach(module('cinkciarzTraining'));
+    rates = [{
+        buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
+    }, {
+        buy: 4.4112, code: 'EUR', date: '2017-01-20', sell: 4.3238
+    }, {
+        buy: 5.123, code: 'GBP', date: '2017-01-20', sell: 5.0216
+    }];
+
+
+    beforeEach(module('cinkciarzTraining', function ($provide)
+    {
+        $provide.value('CurrenciesService', {
+            getCurrencies: jasmine.createSpy('getCurrencies').and.callFake(function ()
+            {
+                return successfulPromise(rates);
+            })
+        });
+    }));
     beforeEach(inject(function ($controller, _$routeParams_, _WalletService_, _$timeout_, _ValidateService_, _RatesFactory_, _$localStorage_)
     {
         routeParams = _$routeParams_;
@@ -163,6 +180,13 @@ describe('SellController', function ()
             {
                 expect(sellCtrl.errorMessage).toBe('Nie wpisałeś ilości');
             });
+            it('should set errorMessage to default after timeout', function ()
+            {
+                timeout.flush();
+                // timeout.verifyNoPendingTasks();
+                sellCtrl.errorMessage = ValidateServiceMock.getValues('');
+                expect(sellCtrl.errorMessage).toBe('');
+            });
         });
 
         describe('when value is lesser then 0', function ()
@@ -176,6 +200,13 @@ describe('SellController', function ()
             {
                 expect(sellCtrl.errorMessage).toBe('Wpisałeś wartość poniżej zera');
             });
+            it('should set errorMessage to default after timeout', function ()
+            {
+                timeout.flush();
+                // timeout.verifyNoPendingTasks();
+                sellCtrl.errorMessage = ValidateServiceMock.getValues('');
+                expect(sellCtrl.errorMessage).toBe('');
+            });
         });
 
         describe('when not enough money to sell', function ()
@@ -188,6 +219,13 @@ describe('SellController', function ()
             it('should set errorMessage', function ()
             {
                 expect(sellCtrl.errorMessage).toBe('Za mało środków');
+            });
+            it('should set errorMessage to default after timeout', function ()
+            {
+                timeout.flush();
+                // timeout.verifyNoPendingTasks();
+                sellCtrl.errorMessage = ValidateServiceMock.getValues('');
+                expect(sellCtrl.errorMessage).toBe('');
             });
         });
 

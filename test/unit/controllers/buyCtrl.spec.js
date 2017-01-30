@@ -10,7 +10,25 @@ describe('BuyController', function ()
     var rates;
     var $localStorage;
 
-    beforeEach(module('cinkciarzTraining'));
+    rates = [{
+        buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
+    }, {
+        buy: 4.4112, code: 'EUR', date: '2017-01-20', sell: 4.3238
+    }, {
+        buy: 5.123, code: 'GBP', date: '2017-01-20', sell: 5.0216
+    }];
+
+
+    beforeEach(module('cinkciarzTraining', function ($provide)
+    {
+        $provide.value('CurrenciesService', {
+            getCurrencies: jasmine.createSpy('getCurrencies').and.callFake(function ()
+            {
+                return successfulPromise(rates);
+            })
+        });
+    }));
+
     beforeEach(inject(function ($controller, _$routeParams_, _WalletService_, _$timeout_, _ValidateService_, _RatesFactory_, _$localStorage_)
     {
         routeParams = _$routeParams_;
@@ -20,13 +38,7 @@ describe('BuyController', function ()
         RatesFactoryMock = _RatesFactory_;
         $localStorage = _$localStorage_;
 
-        rates = [{
-            buy: 4.1635, code: 'USD', date: '2017-01-20', sell: 4.0811
-        }, {
-            buy: 4.4112, code: 'EUR', date: '2017-01-20', sell: 4.3238
-        }, {
-            buy: 5.123, code: 'GBP', date: '2017-01-20', sell: 5.0216
-        }];
+
 
         $localStorage.$reset();
         $localStorage.wallet = {
@@ -150,13 +162,13 @@ describe('BuyController', function ()
             {
                 expect(buyCtrl.errorMessage).toBe('Nie wpisałeś ilości');
             });
-            /*it('should set errorMessage to default after timeout', function ()
+            it('should set errorMessage to default after timeout', function ()
              {
              timeout.flush();
              // timeout.verifyNoPendingTasks();
              buyCtrl.errorMessage = ValidateServiceMock.getValues('');
              expect(buyCtrl.errorMessage).toBe('');
-             });*/
+             });
 
         });
 
@@ -171,6 +183,13 @@ describe('BuyController', function ()
             {
                 expect(buyCtrl.errorMessage).toBe('Wpisałeś wartość poniżej zera');
             });
+            it('should set errorMessage to default after timeout', function ()
+            {
+                timeout.flush();
+                // timeout.verifyNoPendingTasks();
+                buyCtrl.errorMessage = ValidateServiceMock.getValues('');
+                expect(buyCtrl.errorMessage).toBe('');
+            });
         });
 
         describe('when don\'t have enough money', function ()
@@ -184,6 +203,13 @@ describe('BuyController', function ()
             it('should set errorMessage id don\'t have enough money', function ()
             {
                 expect(buyCtrl.errorMessage).toBe('Za mało środków');
+            });
+            it('should set errorMessage to default after timeout', function ()
+            {
+                timeout.flush();
+                // timeout.verifyNoPendingTasks();
+                buyCtrl.errorMessage = ValidateServiceMock.getValues('');
+                expect(buyCtrl.errorMessage).toBe('');
             });
         });
 

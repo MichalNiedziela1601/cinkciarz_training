@@ -129,9 +129,6 @@
 
         //////////////////////
 
-        if (null == $sessionStorage.rates) {
-            getCurrencies();
-        }
 
     }
 
