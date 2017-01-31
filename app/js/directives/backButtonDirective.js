@@ -2,18 +2,18 @@
 {
     'use strict';
 
-    function backButtonDirective($location)
+    function backButtonDirective()
     {
-        function BackController($scope)
-        {
-            $scope.backToMain = function ()
-            {
-                $location.path('/main');
-            };
-        }
-
         return {
-            restrict: 'A', controller: BackController
+            restrict: 'E',
+            template: '<button class="btn btn-info mar-left" ng-click="backToMain()">Powrót</button>',
+            replace: true,
+            controller: function($location,$scope){
+                $scope.backToMain = function ()
+                {
+                    $location.path('/main');
+                };
+            }
         };
 
     }
