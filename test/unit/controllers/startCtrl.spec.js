@@ -42,7 +42,7 @@ describe('StartCtrl', function ()
             $sessionStorage: $sessionStorageMock,
             CurrenciesService: CurrenciesServiceMock
         });
-        spyOn(startCtrl, 'checkStorage');
+        spyOn(startCtrl, 'checkStorage').and.callThrough();
         spyOn(startCtrl, 'open');
 
     }));
@@ -54,6 +54,10 @@ describe('StartCtrl', function ()
 
     describe('initialization', function ()
     {
+        beforeEach(function ()
+        {
+            startCtrl.checkStorage();
+        });
 
         it('should sessionStorage.isRandom set to false', function ()
         {
@@ -77,6 +81,7 @@ describe('StartCtrl', function ()
             afterEach(function ()
             {
                 startCtrl.startVal = undefined;
+                $localStorageMock.$reset();
             });
             it('should uibModal.open call', function ()
             {
@@ -107,8 +112,6 @@ describe('StartCtrl', function ()
             });
             it('should call open', function ()
             {
-
-                console.log($localStorageMock.wallet);
                 expect(startCtrl.open).toHaveBeenCalledWith('sm');
             });
         });
@@ -117,12 +120,15 @@ describe('StartCtrl', function ()
     {
         beforeEach(function ()
         {
-            console.log($localStorageMock.wallet);
+            $localStorageMock.wallet = {
+                PLN: 1000, EUR: 0,
+            };
+            spyOn($locationMock, 'path');
             startCtrl.checkStorage();
+
         });
         it('should location to main', function ()
         {
-            spyOn($locationMock, 'path');
             expect($locationMock.path).toHaveBeenCalledWith('/main');
         });
     });
