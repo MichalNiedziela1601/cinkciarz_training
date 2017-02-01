@@ -12,9 +12,9 @@
         ctrl.ok = function ()
         {
             if (ctrl.value === undefined) {
-                ctrl.showErrorMessage('Nie wpisałeś wartości');
+                showErrorMessage('Nie wpisałeś wartości');
             } else if (ctrl.value < 1) {
-                ctrl.showErrorMessage('Wpisałeś ujemną lub zerową wartość');
+                showErrorMessage('Wpisałeś ujemną lub zerową wartość');
             }
 
             else {
@@ -26,7 +26,8 @@
         {
             $uibModalInstance.dismiss('cancel');
         };
-        ctrl.showErrorMessage = function (message)
+
+        function showErrorMessage(message)
         {
             ctrl.divHide = false;
             ctrl.message = message;
@@ -36,7 +37,7 @@
                 ctrl.message = '';
 
             }, 3500);
-        };
+        }
 
     }
 

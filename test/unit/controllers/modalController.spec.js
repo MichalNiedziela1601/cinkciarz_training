@@ -52,13 +52,8 @@ describe('ModalController', function ()
             beforeEach(function ()
             {
                 messageMock = 'Nie wpisałeś wartości';
-                spyOn(ModalCtrlMock, 'showErrorMessage').and.callThrough();
                 ModalCtrlMock.value = undefined;
                 ModalCtrlMock.ok();
-            });
-            it('should call showErrorMessage with message', function ()
-            {
-                expect(ModalCtrlMock.showErrorMessage).toHaveBeenCalledWith(messageMock);
             });
             it('should set divHide', function ()
             {
@@ -67,6 +62,12 @@ describe('ModalController', function ()
             it('should set message', function ()
             {
                 expect(ModalCtrlMock.message).toEqual(messageMock);
+            });
+            it('should set default values after timeout', function ()
+            {
+                timeoutMock.flush();
+                expect(ModalCtrlMock.divHide).toBe(true);
+                expect(ModalCtrlMock.message).toBe('');
             });
 
         });
@@ -76,13 +77,8 @@ describe('ModalController', function ()
             beforeEach(function ()
             {
                 messageMock = 'Wpisałeś ujemną lub zerową wartość';
-                spyOn(ModalCtrlMock, 'showErrorMessage').and.callThrough();
                 ModalCtrlMock.value = 0;
                 ModalCtrlMock.ok();
-            });
-            it('should call showErrorMessage with message', function ()
-            {
-                expect(ModalCtrlMock.showErrorMessage).toHaveBeenCalledWith(messageMock);
             });
             it('should set divHide', function ()
             {
@@ -91,6 +87,12 @@ describe('ModalController', function ()
             it('should set message', function ()
             {
                 expect(ModalCtrlMock.message).toEqual(messageMock);
+            });
+            it('should set default values after timeout', function ()
+            {
+                timeoutMock.flush();
+                expect(ModalCtrlMock.divHide).toBe(true);
+                expect(ModalCtrlMock.message).toBe('');
             });
 
         });
@@ -118,26 +120,4 @@ describe('ModalController', function ()
         });
     });
 
-    describe('showErrorMessage', function ()
-    {
-        beforeEach(function ()
-        {
-            messageMock = 'test text';
-            ModalCtrlMock.showErrorMessage(messageMock);
-        });
-        it('should set divHide', function ()
-        {
-            expect(ModalCtrlMock.divHide).toBe(false);
-        });
-        it('should set message', function ()
-        {
-            expect(ModalCtrlMock.message).toBe(messageMock);
-        });
-        it('should set default values after timeout', function ()
-        {
-            timeoutMock.flush();
-            expect(ModalCtrlMock.divHide).toBe(true);
-            expect(ModalCtrlMock.message).toBe('');
-        });
-    });
 });
