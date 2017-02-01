@@ -2,9 +2,7 @@
 {
     'use strict';
 
-    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory,
-                      LogFactory)
-
+    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
     {
         var ctrl = this;
         ctrl.stop = null;
@@ -15,7 +13,7 @@
         ctrl.showArrows = false;
 
         ////////////////////////////////
-        ctrl.reset = function()
+        function reset()
         {
             ctrl.modalInstance = $uibModal.open({
                 animation: true, templateUrl: 'myModalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
@@ -28,99 +26,104 @@
                 LogFactory.empty();
                 WalletService.reset();
             });
-        };
+        }
 
-        ctrl.checkCurrencyWallet = function(code)
+        function checkCurrencyWallet(code)
         {
 
-            if(null == $localStorage.wallet){
+            if (null == $localStorage.wallet) {
 
                 return false;
-            }else{
+            } else {
                 return $localStorage.wallet[code] <= 0;
 
             }
-        };
+        }
 
 
-        ctrl.setRandomRates = function()
+        function setRandomRates()
         {
-
             ctrl.stop = $interval(function ()
             {
-                console.log('setRandom');
                 RandomCurrencyService.setRandomRates();
                 ctrl.getRandomRates();
                 ctrl.showArrows = true;
             }, 5000);
 
-        };
+        }
 
-        ctrl.getRandomRates = function()
+        ctrl.getRandomRates = function ()
         {
             ctrl.rates = RandomCurrencyService.getRandomRates();
 
         };
 
-        ctrl.isRandom = function isRandom()
+        ctrl.isRandom = function()
         {
             return $sessionStorage.isRandom;
         };
 
-        ctrl.stopRandom = function()
+        function stopRandom()
         {
             $interval.cancel(ctrl.stop);
             ctrl.showArrows = false;
-        };
+        }
 
-        ctrl.checkRandom = function()
+        function checkRandom()
         {
             if (ctrl.isRandom()) {
-                ctrl.setRandomRates();
+                setRandomRates();
             } else {
-                ctrl.stopRandom();
+                stopRandom();
             }
-        };
+        }
 
-        ctrl.toggleRandomRates = function()
+        function toggleRandomRates()
         {
             $sessionStorage.isRandom = !$sessionStorage.isRandom;
-            ctrl.checkRandom();
-        };
+            checkRandom();
+        }
 
-        ctrl.showLog = function()
+        function showLog()
         {
             ctrl.logs = LogFactory.getLog();
-        };
+        }
 
         ctrl.diffBuy = function (code, buy)
         {
-            var oldRate = ctrl.findRate(code);
+            var oldRate = findRate(code);
             return buy > oldRate.buy;
         };
 
         ctrl.diffSell = function (code, sell)
         {
-            var oldRate = ctrl.findRate(code);
+            var oldRate = findRate(code);
             return sell > oldRate.sell;
         };
 
-        ctrl.findRate = function(code)
+        function findRate(code)
         {
-            ctrl.old = RatesFactory.getOldRates();
-            if (0 === ctrl.old.length) {
+            var old = RatesFactory.getOldRates();
+            if (0 === old.length) {
                 return;
             }
-            for (var i = 0; i < ctrl.old.length; i++) {
+            for (var i = 0; i < old.length; i++) {
 
-                if (ctrl.old[i].code === code) {
-                    return ctrl.old[i];
+                if (old[i].code === code) {
+                    return old[i];
                 }
             }
-        };
+        }
 
         ///////////////////////////////
-        ctrl.checkRandom();
+        ctrl.showLog = showLog;
+        checkRandom();
+        ctrl.reset = reset;
+        ctrl.checkCurrencyWallet = checkCurrencyWallet;
+        ctrl.toggleRandomRates = toggleRandomRates;
+
+
+        //////////////////////
 
 
     }

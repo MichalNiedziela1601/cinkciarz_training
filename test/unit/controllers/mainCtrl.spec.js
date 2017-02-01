@@ -119,11 +119,6 @@ describe('MainCtrl', function ()
 
     describe('initialization', function ()
     {
-        beforeEach(function ()
-        {
-            spyOn(MainMock, 'checkRandom');
-            MainMock.checkRandom();
-        });
         it('should set wallet', function ()
         {
             expect(MainMock.wallet).toEqual(wallet);
@@ -144,10 +139,6 @@ describe('MainCtrl', function ()
         {
             expect(MainMock.showArrows).toBeFalse();
         });
-        it('should call checkRandom', function ()
-        {
-            expect(MainMock.checkRandom).toHaveBeenCalled();
-        });
     });
 
     describe('checkRandom', function ()
@@ -157,13 +148,12 @@ describe('MainCtrl', function ()
             beforeEach(function ()
             {
                 sessionStorageMock.isRandom = false;
-                spyOn(MainMock, 'isRandom').and.callThrough();
-                spyOn(MainMock, 'stopRandom');
-                MainMock.checkRandom();
+
+                MainMock.toggleRandomRates();
             });
-            it('should call stopRandom', function ()
+            it('should set showArrows', function ()
             {
-                expect(MainMock.stopRandom).toHaveBeenCalled();
+                expect(MainMock.showArrows).toBe(false);
             });
         });
 
@@ -171,15 +161,28 @@ describe('MainCtrl', function ()
         {
             beforeEach(function ()
             {
-                sessionStorageMock.isRandom = true;
-                spyOn(MainMock, 'isRandom').and.callThrough();
-                spyOn(MainMock, 'setRandomRates');
-                MainMock.checkRandom();
+                sessionStorageMock.isRandom = false;
+                spyOn(RandomMock, 'setRandomRates');
+                spyOn(RandomMock, 'getRandomRates').and.callFake(function(){
+                    return newRandomRates;
+                });
+                spyOn(MainMock, 'getRandomRates').and.callThrough();
+                MainMock.toggleRandomRates();
+                $intervalSpy.flush(5001);
             });
-
             it('should call setRandomRates', function ()
             {
-                expect(MainMock.setRandomRates).toHaveBeenCalled();
+                expect(RandomMock.setRandomRates).toHaveBeenCalled();
+            });
+
+            it('should set showArrows', function ()
+            {
+                expect(MainMock.showArrows).toBe(true);
+            });
+
+            it('should set new rates', function ()
+            {
+                expect(MainMock.rates).toEqual(newRandomRates);
             });
         });
 
@@ -270,28 +273,7 @@ describe('MainCtrl', function ()
         });
     });
 
-    describe('setRandomRates', function ()
-    {
-        beforeEach(function ()
-        {
-            spyOn(RandomMock, 'setRandomRates');
-            spyOn(MainMock, 'getRandomRates').and.callFake(function(){ return newRandomRates; });
-            MainMock.setRandomRates();
-            $intervalSpy.flush(5000);
-        });
-      
-        it('should call RandomCurrencyService.setRandomRates', function ()
-        {
-            expect(RandomMock.setRandomRates).toHaveBeenCalled();
-        });
 
-        it('should set showArrows to true', function ()
-        {
-            expect(MainMock.showArrows).toBe(true);
-        });
-
-
-    });
 
     describe('isRandom', function ()
     {
@@ -313,7 +295,6 @@ describe('MainCtrl', function ()
             beforeEach(function ()
             {
                 sessionStorageMock.isRandom = false;
-                spyOn(MainMock, 'checkRandom');
                 MainMock.toggleRandomRates();
 
             });
@@ -321,27 +302,18 @@ describe('MainCtrl', function ()
             {
                 expect(sessionStorageMock.isRandom).toBe(true);
             });
-            it('should call checkRandom', function ()
-            {
-                expect(MainMock.checkRandom).toHaveBeenCalled();
-            });
         });
         describe('when isRandom is true', function ()
         {
             beforeEach(function ()
             {
                 sessionStorageMock.isRandom = true;
-                spyOn(MainMock, 'checkRandom');
                 MainMock.toggleRandomRates();
 
             });
             it('should set isRandom to false', function ()
             {
                 expect(sessionStorageMock.isRandom).toBe(false);
-            });
-            it('should call checkRandom', function ()
-            {
-                expect(MainMock.checkRandom).toHaveBeenCalled();
             });
         });
     });
@@ -416,37 +388,4 @@ describe('MainCtrl', function ()
         });
     });
 
-    describe('findRate', function ()
-    {
-        describe('when oldRates not null', function ()
-        {
-            beforeEach(function ()
-            {
-                spyOn(RatesMock, 'getOldRates').and.returnValue(ratesMock);
-
-            });
-            it('should call findOldRates', function ()
-            {
-                MainMock.findRate(ratesMock[1]);
-                expect(RatesMock.getOldRates).toHaveBeenCalled();
-            });
-            it('should return rate for currency code', function ()
-            {
-                expect(MainMock.findRate(ratesMock[0].code)).toEqual(ratesMock[0]);
-                expect(MainMock.findRate(ratesMock[2].code)).toEqual(ratesMock[2]);
-            });
-        });
-
-        describe('when oldRates null', function ()
-        {
-            beforeEach(function ()
-            {
-                spyOn(RatesMock, 'getOldRates').and.returnValue([]);
-            });
-            it('should return undefined ', function ()
-            {
-                expect(MainMock.findRate(ratesMock[0].code)).toBeUndefined();
-            });
-        });
-    });
 });
