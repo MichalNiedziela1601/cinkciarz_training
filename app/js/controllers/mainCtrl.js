@@ -2,12 +2,10 @@
 {
     'use strict';
 
-    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory,
-                      LogFactory)
-
+    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
     {
         var ctrl = this;
-        var stop;
+        ctrl.stop = null;
         ctrl.wallet = WalletService.getWallet();
         ctrl.rates = RatesFactory.getRates();
         ctrl.randomRates = [];
@@ -17,12 +15,12 @@
         ////////////////////////////////
         function reset()
         {
-            var modalInstance = $uibModal.open({
+            ctrl.modalInstance = $uibModal.open({
                 animation: true, templateUrl: 'myModalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
 
             });
 
-            modalInstance.result.then(function ()
+            ctrl.modalInstance.result.then(function ()
             {
                 $location.path('/');
                 LogFactory.empty();
@@ -33,48 +31,47 @@
         function checkCurrencyWallet(code)
         {
 
-            if(null == $localStorage.wallet){
+            if (null == $localStorage.wallet) {
 
-                return true;
+                return false;
+            } else {
+                return $localStorage.wallet[code] <= 0;
+
             }
-            return $localStorage.wallet[code] <= 0;
         }
-
-
-
 
 
         function setRandomRates()
         {
-            stop = $interval(function ()
+            ctrl.stop = $interval(function ()
             {
                 RandomCurrencyService.setRandomRates();
-                getRandomRates();
+                ctrl.getRandomRates();
                 ctrl.showArrows = true;
             }, 5000);
 
         }
 
-        function getRandomRates()
+        ctrl.getRandomRates = function ()
         {
             ctrl.rates = RandomCurrencyService.getRandomRates();
 
-        }
+        };
 
-        function isRandom()
+        ctrl.isRandom = function()
         {
             return $sessionStorage.isRandom;
-        }
+        };
 
         function stopRandom()
         {
-            $interval.cancel(stop);
+            $interval.cancel(ctrl.stop);
             ctrl.showArrows = false;
         }
 
         function checkRandom()
         {
-            if (isRandom()) {
+            if (ctrl.isRandom()) {
                 setRandomRates();
             } else {
                 stopRandom();
@@ -120,12 +117,11 @@
 
         ///////////////////////////////
         ctrl.showLog = showLog;
-        ctrl.checkRandom = checkRandom();
+        checkRandom();
         ctrl.reset = reset;
         ctrl.checkCurrencyWallet = checkCurrencyWallet;
         ctrl.toggleRandomRates = toggleRandomRates;
-        ctrl.isRandom = isRandom;
-        ctrl.stopRandom = stopRandom;
+
 
         //////////////////////
 
