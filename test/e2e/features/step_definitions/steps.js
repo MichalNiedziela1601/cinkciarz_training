@@ -92,6 +92,20 @@ module.exports = function ()
         {
             return fragments(name)().click().then(function ()
             {
+                browser.ignoreSynchronization = true;
+                return browser.waitForAngular();
+            }).then(function ()
+            {
+                callback();
+            });
+        });
+    });
+    this.When(/^I click "([^"]*)" and wait$/, function (name, callback)
+    {
+        return browser.actions().mouseMove(fragments(name)()).perform().then(function ()
+        {
+            return fragments(name)().click().then(function ()
+            {
                 return browser.waitForAngular();
             }).then(function ()
             {
@@ -114,6 +128,7 @@ module.exports = function ()
         table = table.split('.');
         table.pop();
         table.push(element);
+
         var columnElement = fragments(table.join('.'))();
         rowElement.element(columnElement.locator()).click().then(function ()
         {
@@ -158,5 +173,22 @@ module.exports = function ()
         var columnElement = fragments(table.join('.'))();
         expect(rowElement.element(columnElement.locator()).getText()).to.eventually.equal(expectedText).and.notify(callback);
     });
+
+    this.Then(/^I should see "(.*)" in "([^"]*)" column in row "(\d+)" of "([^"]*)" div$/, function (expectedText, columnName, row, div, callback)
+    {
+        row = parseInt(row,10);
+        var rowElement = fragments(div)().element(by.css('h4:nth-of-type('+row+')'));
+        div = div.split('.');
+        div.pop();
+        div.push(columnName);
+        var columnElement = fragments(div.join('.'))();
+        expect(rowElement.element(columnElement.locator()).getText()).to.eventually.equal(expectedText).and.notify(callback);
+    });
+
+    this.Given(/^Add "(\d+)" PLN to wallet/, function(value, callback){
+        localStorage.setItem('ngStorage-wallet', value).and.notify(callback);
+    });
+
+
 
 };

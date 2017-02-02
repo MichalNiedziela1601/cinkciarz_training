@@ -20,7 +20,16 @@ module.exports.config = {
     onPrepare: function ()
     {
         'use strict';
-        browser.manage().window().setSize(1366, 768);
+        setTimeout(function() {
+            browser.driver.executeScript(function() {
+                return {
+                    width: window.screen.availWidth,
+                    height: window.screen.availHeight
+                };
+            }).then(function(result) {
+                browser.driver.manage().window().setSize(result.width, result.height);
+            });
+        });
     }
 };
 
