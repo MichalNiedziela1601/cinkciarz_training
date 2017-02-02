@@ -8,8 +8,8 @@
                     <div class="panel-heading pan-heading"><h3 class="panel-title">Twój portfel</h3></div>
 
                     <div class="panel-body">
-                        <h3>PLN: {{buyCtrl.wallet.PLN | number : 2}}</h3>
-                        <h3>{{buyCtrl.rate.code}}: {{buyCtrl.wallet[buyCtrl.currency] | number: 2}}</h3></div>
+                        <h3 id="wPln">PLN: {{buyCtrl.wallet.PLN | number : 2}}</h3>
+                        <h3 id="wCurrency">{{buyCtrl.rate.code}}: {{buyCtrl.wallet[buyCtrl.currency] | number: 2}}</h3></div>
                 </div>
                 <h3>Kurs kupna: {{buyCtrl.rate.buy}}</h3>
 
@@ -24,15 +24,15 @@
                     </div>
                 </div>
 
-                <div ng-show="buyCtrl.errorMessage" class="alert alert-danger animate-hide">
+                <div ng-show="buyCtrl.errorMessage" class="alert alert-danger animate-hide" id="errorDiv">
 
                     {{buyCtrl.errorMessage}}
                 </div>
 
 
-                <button class="btn btn-success" ng-click="buyCtrl.buy()" id="sell">Kup</button>
+                <button class="btn btn-success" ng-click="buyCtrl.buy()" id="buyButton">Kup</button>
                 &nbsp;&nbsp;
-                <back-button></back-button>
+                <back-button id="backButton"></back-button>
             </div>
         </div>
     </div>

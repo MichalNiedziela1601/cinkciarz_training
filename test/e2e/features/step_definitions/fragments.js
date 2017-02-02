@@ -41,9 +41,42 @@ var fragments = function (text)
             mInput: element.bind(null, by.css('#startModalInput')),
             mOk: element.bind(null, by.css('#startOk')),
             mHide: element.bind(null, by.css('#mStartHide'))
+        },
+
+        main: {
+            walCurrency: element.bind(null, by.css('#walCurrency')),
+            walletShow: element.bind(null, by.css('#walletShow')),
+            cKey: element.bind(null, by.css('span[data-name="cKey"]')),
+            tRates: element.bind(null, by.css('#tRates')),
+            tBuy: element.bind(null, by.css('a[data-name="tRatesBuy"]')),
+            tSell: element.bind(null, by.css('a[data-name="tRatesSell"]')),
+            reset: element.bind(null, by.css('#resetButton')),
+            random: element.bind(null, by.css('#random'))
+        },
+
+        buy: {
+            currencyValue: element.bind(null, by.css('#currencyValue')),
+            buyButton: element.bind(null, by.css('#buyButton')),
+            errorDiv: element.bind(null,by.css('#errorDiv')),
+            wCurrency: element.bind(null, by.css('#wCurrency')),
+            wPln: element.bind(null,by.css('#wCurrency')),
+            backButton: element.bind(null, by.css('#backButton'))
+        },
+        sell: {
+            currencyValue: element.bind(null, by.css('#currencyValue')),
+            sellButton: element.bind(null, by.css('#sellButton')),
+            errorDiv: element.bind(null,by.css('#errorDiv')),
+            wCurrency: element.bind(null, by.css('#wCurrency')),
+            wPln: element.bind(null,by.css('#wCurrency')),
+            backButton: element.bind(null, by.css('#backButton'))
+        },
+
+        confirmModal: {
+            ok: element.bind(null,by.css('#confirmOk'))
         }
 
     };
+
 
     return byString(mapping, text);
 };
