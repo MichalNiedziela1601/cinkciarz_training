@@ -87,6 +87,7 @@
         function showLog()
         {
             ctrl.logs = LogFactory.getLog();
+            console.log(ctrl.logs);
         }
 
         ctrl.diffBuy = function (code, buy)
@@ -118,6 +119,7 @@
         ///////////////////////////////
         ctrl.showLog = showLog;
         checkRandom();
+        ctrl.showLog();
         ctrl.reset = reset;
         ctrl.checkCurrencyWallet = checkCurrencyWallet;
         ctrl.toggleRandomRates = toggleRandomRates;

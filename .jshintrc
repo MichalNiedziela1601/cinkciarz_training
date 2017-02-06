@@ -38,6 +38,9 @@
         "it": true,
         "expect": true,
         "inject" : true,
-        "angular" : true
+        "angular" : true,
+        "jasmine" : true,
+        "spyOn" : true,
+        "successfulPromise" : true
     }
 }
