@@ -1,52 +1,30 @@
 (function ()
 {
     'use strict';
-    function RatesFactory($sessionStorage, CurrenciesService)
+    function RatesFactory($sessionStorage)
     {
         function Rates()
         {
-            var ctrl = this;
-            ctrl.rates = $sessionStorage.rates;
-            ctrl.oldRates = [];
 
+            this.rates = angular.copy($sessionStorage.rates);
+            this.oldRates = [];
 
-            function getCurrencies()
+            this.addRates = function (rates)
             {
-                CurrenciesService.getCurrencies()
-                        .then(function (data)
-                        {
-                            $sessionStorage.rates = data;
-                            ctrl.rates = angular.copy($sessionStorage.rates);
-                        })
-                        .catch(function (error)
-                        {
-                            console.log(error);
-                        });
-
-            }
-
-            getCurrencies();
-
-            ctrl.addRates = function (rates)
-            {
-                angular.copy(ctrl.rates,ctrl.oldRates);
-                ctrl.rates = angular.copy(rates);
+                this.oldRates = angular.copy(this.rates);
+                this.rates = angular.copy(rates);
             };
 
 
-            ctrl.getRates = function ()
+            this.getRates = function ()
             {
-                return ctrl.rates;
+                return this.rates;
             };
 
-            ctrl.getOldRates = function ()
+            this.getOldRates = function ()
             {
-                return ctrl.oldRates;
+                return this.oldRates;
             };
-
-
-
-
 
         }
 

@@ -81,7 +81,7 @@
 
         ctrl.showTitle = showTitle;
         ctrl.buy = buy;
-        getCurrencies();
+        ctrl.getCUrrencies = getCurrencies();
 
 
     }

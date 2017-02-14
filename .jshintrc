@@ -37,6 +37,10 @@
         "before": true,
         "it": true,
         "expect": true,
-        "angular" : false
+        "inject" : true,
+        "angular" : true,
+        "jasmine" : true,
+        "spyOn" : true,
+        "successfulPromise" : true
     }
 }

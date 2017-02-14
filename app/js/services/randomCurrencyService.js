@@ -2,31 +2,28 @@
 {
     'use strict';
 
-    function RandomCurrencyService(RatesFactory, CurrenciesService)
+    function RandomCurrencyService(RatesFactory, $sessionStorage)
     {
+        var ctrl = this;
+        this.randomRates = RatesFactory.getRates();
 
-        var randomRates = RatesFactory.getRates();
-        var orginalRates = CurrenciesService.getCurrencies()
-                .then(function (data)
-                {
-                    orginalRates = data;
-                })
-                .catch(function (error)
-                {
-                    console.log('Error occured', error);
-                });
+        this.getOrginalRates = function ()
+        {
+             return $sessionStorage.rates;
+        };
+        this.orginalRates = this.getOrginalRates();
 
-
-        function randomValue()
+        this.randomValue = function ()
         {
             return (Math.random()).toFixed(2);
-        }
+        };
 
 
-        function operations(currency,operation){
+        this.operations = function (currency, operation)
+        {
             currency = parseFloat(currency);
-            var value = parseFloat(randomValue()).toFixed(2);
-            switch (operation){
+            var value = parseFloat(this.randomValue()).toFixed(2);
+            switch (operation) {
                 case '-' :
                     currency -= currency * value / 100;
                     break;
@@ -37,58 +34,56 @@
 
             currency = currency.toFixed(4);
             return currency;
-        }
+        };
 
-        function randomOperations(currency)
+        this.randomOperations = function (currency)
         {
             var random = Math.floor(Math.random() * 2);
             var value = 0;
             if (0 === random) {
-                value = operations(currency, '-');
+                value = this.operations(currency, '-');
             } else {
-                value = operations(currency,'+');
+                value = this.operations(currency, '+');
             }
             return value;
-        }
+        };
 
         this.setRandomRates = function ()
         {
-
-            for (var i = 0; i < orginalRates.length; i++) {
-                var randomBuy = parseFloat(randomOperations(orginalRates[i].buy));
-                randomRates[i].buy = randomBuy;
-                while (isDiffrentToBig(orginalRates[i].buy, randomBuy)) {
-                    randomRates[i].buy = parseFloat(randomOperations(orginalRates[i].buy));
+            for (var i = 0; i < this.orginalRates.length; i++) {
+                var randomBuy = parseFloat(this.randomOperations(this.orginalRates[i].buy));
+                this.randomRates[i].buy = randomBuy;
+                while (this.isDiffrentToBig(this.orginalRates[i].buy, randomBuy)) {
+                    this.randomRates[i].buy = parseFloat(this.randomOperations(this.orginalRates[i].buy));
                 }
-                var randomSell = parseFloat(randomOperations(orginalRates[i].sell));
-                randomRates[i].sell = randomSell;
-                while (isDiffrentToBig(orginalRates[i].sell, randomSell)) {
-                    randomRates[i].sell = parseFloat(randomOperations(orginalRates[i].sell));
+                var randomSell = parseFloat(this.randomOperations(this.orginalRates[i].sell));
+                this.randomRates[i].sell = randomSell;
+                while (this.isDiffrentToBig(this.orginalRates[i].sell, randomSell)) {
+                    this.randomRates[i].sell = parseFloat(this.randomOperations(this.orginalRates[i].sell));
                 }
             }
-            RatesFactory.addRates(randomRates);
+            RatesFactory.addRates(this.randomRates);
         };
 
-        function isDiffrentToBig(original, random)
+        this.isDiffrentToBig = function (original, random)
         {
-            return mathDiff(original, random) > 5;
-        }
+            return this.mathDiff(original, random) > 5;
+        };
 
-        function mathDiff(original, random)
+        this.mathDiff = function (original, random)
         {
             return Math.abs(((original - random) / original) * 100);
-        }
+        };
 
 
         this.getRandomRates = function ()
         {
-            return randomRates;
+            return this.randomRates;
         };
 
 
     }
 
-    angular.module('cinkciarzTraining')
-            .service('RandomCurrencyService', RandomCurrencyService);
+    angular.module('cinkciarzTraining').service('RandomCurrencyService', RandomCurrencyService);
 
 })();

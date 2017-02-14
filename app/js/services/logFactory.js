@@ -4,29 +4,28 @@
     function LogFactory($localStorage)
     {
 
-
-        var LogObj = function (message)
-        {
-            this.message = message;
-            this.date = new Date();
-        };
-
         function LoggerFactory(){
-            var ctrl = this;
-            ctrl.logArr = $localStorage.log;
-            ctrl.addLog = function(message)
+
+            var LogObj = function (message)
             {
-                ctrl.logArr.push(new LogObj(message));
+                this.message = message;
+                this.date = new Date();
             };
 
-            ctrl.getLog = function ()
+            this.logArr = $localStorage.log;
+            this.addLog = function(message)
             {
-                return ctrl.logArr;
+                this.logArr.push(new LogObj(message));
             };
 
-            ctrl.empty = function ()
+            this.getLog = function ()
             {
-                ctrl.logArr = [];
+                return this.logArr;
+            };
+
+            this.empty = function ()
+            {
+                this.logArr = [];
             };
         }
 
