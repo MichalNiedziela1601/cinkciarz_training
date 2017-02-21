@@ -1,0 +1,10 @@
+pg:
+  image: postgres:9.4
+  expose:
+    - "5432"
+  ports:
+    - "5432:5432"
+  environment:
+    - POSTGRES_PASSWORD=cinkciarz-zaq1@WSX
+    - POSTGRES_USER=cinkciarz
+    - POSTGRES_DB=cinkciarz
