@@ -9,8 +9,15 @@
         ctrl.rate = {};
         ctrl.value = 0;
 
-        ctrl.wallet = WalletService.getWallet();
         ctrl.errorMessage = '';
+        ctrl.getWallet = function()
+        {
+            WalletService.getWallet().then(function (data)
+            {
+                ctrl.wallet = data;
+            });
+        };
+        ctrl.getWallet();
 
         ////////////////////
 
@@ -52,8 +59,8 @@
                 }, 3000);
 
             } else {
-                WalletService.sell(ctrl.rate.code, ctrl.rate.sell, ctrl.value);
-                ctrl.wallet = WalletService.getWallet();
+                WalletService.sell(ctrl.wallet,ctrl.rate.code, ctrl.rate.sell, ctrl.value);
+                ctrl.getWallet();
                 ctrl.value = 0;
             }
 

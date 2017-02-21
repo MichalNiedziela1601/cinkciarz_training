@@ -6,12 +6,17 @@
     {
         var ctrl = this;
         ctrl.stop = null;
-        ctrl.wallet = WalletService.getWallet();
+        ctrl.getWallet = function()
+        {
+            WalletService.getWallet().then(function (data)
+            {
+                ctrl.wallet = data;
+            });
+        };
         ctrl.rates = RatesFactory.getRates();
         ctrl.randomRates = [];
         ctrl.logs = LogFactory.getLog();
         ctrl.showArrows = false;
-
         ////////////////////////////////
         function reset()
         {
@@ -31,11 +36,11 @@
         function checkCurrencyWallet(code)
         {
 
-            if (null == $localStorage.wallet) {
+            if (null == ctrl.wallet) {
 
                 return false;
             } else {
-                return $localStorage.wallet[code] <= 0;
+                return ctrl.wallet[code] <= 0;
 
             }
         }
@@ -65,6 +70,7 @@
 
         function stopRandom()
         {
+
             $interval.cancel(ctrl.stop);
             ctrl.showArrows = false;
         }
@@ -87,7 +93,6 @@
         function showLog()
         {
             ctrl.logs = LogFactory.getLog();
-            console.log(ctrl.logs);
         }
 
         ctrl.diffBuy = function (code, buy)
@@ -117,12 +122,14 @@
         }
 
         ///////////////////////////////
+        ctrl.getWallet();
         ctrl.showLog = showLog;
         checkRandom();
         ctrl.showLog();
         ctrl.reset = reset;
         ctrl.checkCurrencyWallet = checkCurrencyWallet;
         ctrl.toggleRandomRates = toggleRandomRates;
+        ctrl.stopRandom = stopRandom;
 
 
         //////////////////////

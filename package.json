@@ -37,5 +37,10 @@
     "protractor": "2.5.1",
     "protractor-cucumber-framework": "0.6.0",
     "webdriver-manager": "^12.0.1"
+  },
+  "dependencies": {
+    "hapi": "16.1.0",
+    "hapi-cors": "1.0.1",
+    "pg": "6.1.2"
   }
 }

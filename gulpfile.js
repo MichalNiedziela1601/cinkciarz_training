@@ -30,9 +30,14 @@ gulp.task('less', function ()
 gulp.task('browserSync', function ()
 {
     browserSync.init({
+        ui: {
+            port: 3002
+        },
         server: {
             baseDir: 'app'
-        }
+
+        },
+        port: 3001
     });
 });
 

@@ -8,8 +8,16 @@
         ctrl.currency = $routeParams.currency;
         ctrl.rates = RatesFactory.getRates();
         ctrl.value = 0;
-        ctrl.wallet = WalletService.getWallet();
         ctrl.errorMessage = '';
+
+        ctrl.getWallet = function()
+        {
+            WalletService.getWallet().then(function (data)
+            {
+                ctrl.wallet = data;
+            });
+        };
+        ctrl.getWallet();
 
         ///////////////////
 
@@ -51,8 +59,8 @@
                     ctrl.errorMessage = ValidateService.getValues('');
                 }, 3000);
             } else {
-                WalletService.buy(ctrl.rate.code, ctrl.rate.buy, ctrl.value);
-                ctrl.wallet = WalletService.getWallet();
+                WalletService.buy(ctrl.wallet,ctrl.rate.code, ctrl.rate.buy, ctrl.value);
+                ctrl.getWallet();
                 ctrl.value = 0;
             }
 
