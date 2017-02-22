@@ -24,7 +24,7 @@
             wallet[code] -= value;
 
             LogFactory.addLog('Sprzedałeś ' + value + ' ' + code + ' zyskując ' + (rate * value).toFixed(2) + ' zł');
-            return $http.post(url, wallet).then(function(response){
+            return $http.put(url, wallet).then(function(response){
                 return response.data;
             });
         };
@@ -34,7 +34,7 @@
             wallet[code] += value;
             wallet.PLN -= (rate * value);
             LogFactory.addLog('Kupiłeś ' + value + ' ' + code + ' za ' + (rate * value).toFixed(2) + ' zł');
-            return $http.post(url, wallet).then(function(response){
+            return $http.put(url, wallet).then(function(response){
                 return response.data;
             });
         };

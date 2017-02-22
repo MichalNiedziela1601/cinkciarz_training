@@ -7,7 +7,7 @@ module.exports =function(server){
             allowCredentials: 'true',
             exposeHeaders: ['content-type', 'content-length'],
             maxAge: 600,
-            methods: ['POST, GET, OPTIONS, DELETE'],
+            methods: ['POST, GET, OPTIONS, DELETE, PUT'],
             headers: ['Accept', 'Content-Type', 'Authorization']
         }
 

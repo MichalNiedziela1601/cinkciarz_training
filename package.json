@@ -39,6 +39,10 @@
     "webdriver-manager": "^12.0.1"
   },
   "dependencies": {
+    "bluebird": "3.4.7",
+    "good": "7.1.0",
+    "good-console": "6.4.0",
+    "good-squeeze": "5.0.1",
     "hapi": "16.1.0",
     "hapi-cors": "1.0.1",
     "pg": "6.1.2"

@@ -24,7 +24,6 @@
 
                 ctrl.startVal = parseInt(startValue, 10);
                 WalletService.setStartValue(ctrl.startVal).then(function(data){
-                    console.log(data);
                 });
                 $localStorage.$default({
                     log: []
@@ -32,23 +31,23 @@
                 $location.path('/main');
             });
         };
-
-        ctrl.getWallet = function(){
-            WalletService.getWallet().then(function(data){
-                ctrl.wallet = data;
-            });
-        };
-        ctrl.getWallet();
-
         ctrl.checkStorage = function()
         {
-            if (null == ctrl.wallet) {
+            if ('' === ctrl.wallet) {
                 ctrl.open('sm');
             } else {
                 $location.path('/main');
             }
         };
-        ctrl.checkStorage();
+        ctrl.getWallet = function(){
+            WalletService.getWallet().then(function(data){
+                ctrl.wallet = data;
+                ctrl.checkStorage();
+            });
+        };
+        ctrl.getWallet();
+
+
     }
 
 

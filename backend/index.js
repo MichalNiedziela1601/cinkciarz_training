@@ -22,7 +22,8 @@ module.exports = function ()
     });
     plugins(server);
     routes(server);
-    let sql = 'CREATE TABLE IF NOT EXISTS wallet (id SERIAL PRIMARY KEY,PLN BIGINT,EUR BIGINT,GBP BIGINT,USD BIGINT )';
+    let sql = 'CREATE TABLE IF NOT EXISTS wallet (id SERIAL PRIMARY KEY, "PLN" DOUBLE PRECISION, ' +
+        '"EUR" DOUBLE PRECISION,"GBP" DOUBLE PRECISION,"USD" DOUBLE PRECISION )';
     pool.query(sql)
             .then(() =>
     {

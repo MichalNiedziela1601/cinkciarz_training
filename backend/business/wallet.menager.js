@@ -1,19 +1,24 @@
 'use strict';
 const walletDAO = require('../dao/wallet.dao');
 function getWallet(){
-    return walletDAO.get();
+   return walletDAO.get();
 }
 
 function saveWallet(wallet)
 {
-    walletDAO.save(wallet);
+    return walletDAO.save(wallet);
 }
 
 function resetWallet(){
-    walletDAO.reset();
+    return walletDAO.reset();
+}
+
+function initWallet(wallet){
+    return walletDAO.init(wallet);
 }
 module.exports = {
+    initWallet,
     getWallet,
     saveWallet,
     resetWallet
-}
+};

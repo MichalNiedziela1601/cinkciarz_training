@@ -45,5 +45,6 @@
     "const": true,
     "=>": true
   },
+  "esnext" : true,
   "esversion": 6
 }

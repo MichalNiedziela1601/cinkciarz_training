@@ -59,8 +59,10 @@
                 }, 3000);
 
             } else {
-                WalletService.sell(ctrl.wallet,ctrl.rate.code, ctrl.rate.sell, ctrl.value);
-                ctrl.getWallet();
+                WalletService.sell(ctrl.wallet,ctrl.rate.code, ctrl.rate.sell, ctrl.value).then(function () {
+                    ctrl.getWallet();
+                });
+
                 ctrl.value = 0;
             }
 

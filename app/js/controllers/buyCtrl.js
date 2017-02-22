@@ -59,8 +59,10 @@
                     ctrl.errorMessage = ValidateService.getValues('');
                 }, 3000);
             } else {
-                WalletService.buy(ctrl.wallet,ctrl.rate.code, ctrl.rate.buy, ctrl.value);
-                ctrl.getWallet();
+                WalletService.buy(ctrl.wallet,ctrl.rate.code, ctrl.rate.buy, ctrl.value).then(function(data){
+                    ctrl.getWallet();
+                });
+
                 ctrl.value = 0;
             }
 
