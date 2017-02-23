@@ -2,7 +2,7 @@
 {
     'use strict';
 
-    function WalletService($localStorage, $http, LogFactory)
+    function WalletService($http, LogFactory)
     {
         var url = 'http://localhost:3000/api/wallet';
         this.getWallet = function ()

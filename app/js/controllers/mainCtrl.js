@@ -15,7 +15,6 @@
         };
         ctrl.rates = RatesFactory.getRates();
         ctrl.randomRates = [];
-        ctrl.logs = LogFactory.getLog();
         ctrl.showArrows = false;
         ////////////////////////////////
         function reset()
@@ -121,7 +120,14 @@
             }
         }
 
+        function getLog(){
+            LogFactory.getLog().then(function (result) {
+                ctrl.logs = result;
+            });
+        }
+
         ///////////////////////////////
+        getLog();
         ctrl.getWallet();
         ctrl.showLog = showLog;
         checkRandom();

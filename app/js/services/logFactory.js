@@ -1,31 +1,32 @@
 (function ()
 {
     'use strict';
-    function LogFactory($localStorage)
+    function LogFactory($http)
     {
 
         function LoggerFactory(){
+            var url = 'http://localhost:3000/api/log';
 
-            var LogObj = function (message)
-            {
-                this.message = message;
-                this.date = new Date();
-            };
 
-            this.logArr = $localStorage.log;
             this.addLog = function(message)
             {
-                this.logArr.push(new LogObj(message));
+                return $http.post(url, { message: message}).then(function () {
+
+                });
             };
 
-            this.getLog = function ()
+            this.getLog = function()
             {
-                return this.logArr;
+                return $http.get(url).then(function(response){
+                    return response.data;
+                });
             };
 
             this.empty = function ()
             {
-                this.logArr = [];
+                return $http.delete(url).then(function(){
+
+                });
             };
         }
 

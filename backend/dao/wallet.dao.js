@@ -30,7 +30,7 @@ function get(){
 function save(wallet)
 {
     let sql = 'UPDATE wallet SET "PLN" = $1, "EUR" = $2, "GBP" = $3, "USD" = $4';
-    return pool.query(sql, [wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD]).then(result => {
+    return pool.query(sql, [wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD]).then(() => {
         return true;
     });
 
@@ -38,7 +38,7 @@ function save(wallet)
 
 function reset(){
    let sql = 'DELETE FROM wallet';
-    return pool.query(sql).then(result => {
+    return pool.query(sql).then(() => {
         return true;
     });
 

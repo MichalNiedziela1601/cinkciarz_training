@@ -29,6 +29,7 @@ module.exports = function (server) {
         handler: function (req, res) {
             let data = req.payload;
             walletManager.saveWallet(data).then(function(){
+
                 res();
             });
 
