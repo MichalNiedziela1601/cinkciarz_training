@@ -24,11 +24,12 @@
 
                 ctrl.startVal = parseInt(startValue, 10);
                 WalletService.setStartValue(ctrl.startVal).then(function(data){
+                    $localStorage.$default({
+                        log: []
+                    });
+                    $location.path('/main');
                 });
-                $localStorage.$default({
-                    log: []
-                });
-                $location.path('/main');
+
             });
         };
         ctrl.checkStorage = function()

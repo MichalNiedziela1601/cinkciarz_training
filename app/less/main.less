@@ -321,3 +321,32 @@ body {
     transform: rotate3d(0, 1, 0, 360deg);
   }
 }
+
+
+.register-contener {
+  .main;
+  border-radius: 10px;
+  .pd-side(25px, 35px, 35px, 35px);
+  box-shadow: 3px 3px 1px 1px lightgrey;
+
+  .responsive(425px, { .pd-side(25px, 8px, 35px, 8px); })
+
+}
+
+.btn-login {
+  background-color: darken(@second-color,10%);
+  outline: none;
+  color: #000;
+  font-size: 14px;
+  height: auto;
+  font-weight: normal;
+  padding: 14px 0;
+  text-transform: uppercase;
+  border-color: @main-color;
+  &:hover, &:focus {
+    color: #000;
+    background-color: darken(@second-color,15%);
+    border-color: @main-color;
+  }
+}
+

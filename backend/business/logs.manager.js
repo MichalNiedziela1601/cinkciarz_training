@@ -8,7 +8,6 @@ function getLogs(){
 }
 
 function saveLog(log){
-    // log.data=new Date();
     return logDAO.save(log);
 }
 

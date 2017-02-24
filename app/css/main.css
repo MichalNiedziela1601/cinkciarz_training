@@ -303,3 +303,31 @@ body {
     transform: rotate3d(0, 1, 0, 360deg);
   }
 }
+.register-contener {
+  background-color: #dddbb9;
+  border-radius: 10px;
+  padding: 25px 35px 35px 35px;
+  box-shadow: 3px 3px 1px 1px lightgrey;
+}
+@media only screen and (max-width: 425px) {
+  .register-contener {
+    padding: 25px 8px 35px 8px;
+  }
+}
+.btn-login {
+  background-color: #a8a46a;
+  outline: none;
+  color: #000;
+  font-size: 14px;
+  height: auto;
+  font-weight: normal;
+  padding: 14px 0;
+  text-transform: uppercase;
+  border-color: #dddbb9;
+}
+.btn-login:hover,
+.btn-login:focus {
+  color: #000;
+  background-color: #9d995b;
+  border-color: #dddbb9;
+}

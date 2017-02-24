@@ -24,4 +24,13 @@ module.exports = function(server){
             });
         }
     });
+    server.route({
+        method: 'DELETE',
+        path: '/api/log',
+        handler: function(req,res){
+            logManager.resetLog().then(() => {
+                res();
+            });
+        }
+    })
 };
