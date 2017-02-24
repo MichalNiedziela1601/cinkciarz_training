@@ -128,7 +128,15 @@ body {
   .generate-pd-bottom(@n, (@i + 1));
 }
 
+.generate-pd-top(@n, @i: 0) when (@i =< @n) {
+  .pd-top-@{i} {
+    padding-top: (@i * 10px);
+  }
+  .generate-pd-top(@n, (@i + 1));
+}
+
 .generate-pd-bottom(5);
+.generate-pd-top(5);
 
 .generate-mar-bottom(@n, @i: 0) when (@i =< @n) {
   .mar-bottom-@{i} {
@@ -137,7 +145,14 @@ body {
   .generate-mar-bottom(@n, (@i + 1));
 }
 
+.generate-mar-top(@n, @i: 0) when (@i =< @n) {
+  .mar-top-@{i} {
+    margin-top: (@i * 10px);
+  }
+  .generate-mar-top(@n, (@i + 1));
+}
 .generate-mar-bottom(5);
+.generate-mar-top(5);
 
 .page-header {
   border-bottom-color: @color-black;
@@ -321,3 +336,33 @@ body {
     transform: rotate3d(0, 1, 0, 360deg);
   }
 }
+
+
+.register-contener {
+  .main;
+  border-radius: 10px;
+  .pd-side(25px, 35px, 35px, 35px);
+  box-shadow: 3px 3px 1px 1px lightgrey;
+
+  .responsive(425px, { .pd-side(25px, 8px, 35px, 8px); })
+
+}
+
+.btn-login {
+  background-color: darken(@second-color,10%);
+  outline: none;
+  color: #000;
+  font-size: 14px;
+  height: auto;
+  font-weight: normal;
+  padding: 14px 0;
+  text-transform: uppercase;
+  border-color: @main-color;
+  &:hover, &:focus {
+    color: #000;
+    background-color: darken(@second-color,15%);
+    border-color: @main-color ;
+    outline: darken(@main-color,10%) solid !important;
+  }
+}
+

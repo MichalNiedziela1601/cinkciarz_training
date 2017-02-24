@@ -1,7 +1,7 @@
 (function ()
 {
     'use strict';
-    function LogFactory($http)
+    function LogFactory($http,moment)
     {
 
         function LoggerFactory(){
@@ -18,7 +18,11 @@
             this.getLog = function()
             {
                 return $http.get(url).then(function(response){
-                    return response.data;
+                    var logs = response.data;
+                    logs.map(function(log){
+                        log.data = moment(log.data).format('DD/MM/YYYY o hh:mm');
+                    });
+                    return logs;
                 });
             };
 

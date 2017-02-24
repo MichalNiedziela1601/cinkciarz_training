@@ -20,15 +20,18 @@
         function reset()
         {
             ctrl.modalInstance = $uibModal.open({
-                animation: true, templateUrl: 'views/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
+                animation: true, templateUrl: 'mainCtrl/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
 
             });
 
             ctrl.modalInstance.result.then(function ()
             {
-                $location.path('/');
-                LogFactory.empty();
-                WalletService.reset();
+
+                WalletService.reset().then(function(){
+                    LogFactory.empty().then(function(){
+                        $location.path('/');
+                    });
+                });
             });
         }
 
