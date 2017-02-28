@@ -2,7 +2,7 @@
 {
     'use strict';
 
-    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
+    function MainCtrl($location, WalletService, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
     {
         var ctrl = this;
         ctrl.stop = null;

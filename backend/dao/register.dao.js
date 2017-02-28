@@ -22,6 +22,7 @@ function register(person){
     return pool.query(sql, [person.email, person.password, person.name]).then(() => {
         return Promise.resolve();
     }).catch((error) => {
+        console.log('error',error);
         return Promise.reject(error);
     });
 }

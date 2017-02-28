@@ -11,7 +11,6 @@ module.exports = function (server) {
         method: 'POST',
         path: '/api/register',
         handler: function (req, res) {
-
             let person = req.payload.person;
             registerMenager.register(person).then((result) => {
                 res(result);
