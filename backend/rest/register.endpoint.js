@@ -14,10 +14,8 @@ module.exports = function (server) {
 
             let person = req.payload.person;
             registerMenager.register(person).then((result) => {
-                console.log(result);
-                res();
+                res(result);
             }).catch((error) => {
-                console.log('err',error);
                 res(error).code(400);
             });
         }

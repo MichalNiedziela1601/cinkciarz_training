@@ -18,8 +18,13 @@
             return active;
         }
 
+        function checkPath(){
+            return $location.path() === '/register';
+        }
+
         ctrl.toggleCollapse = toggleCollapse;
         ctrl.isActive = isActive;
+        ctrl.checkPath = checkPath;
 
     }
 

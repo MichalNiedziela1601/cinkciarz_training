@@ -7,13 +7,21 @@
      function RegisterController(Register){
         var ctrl = this;
 
-         function register(){
-             console.log(ctrl.person);
-             Register.register(ctrl.person).then(function(data){
-                 console.log(data);
-             }).catch(function(error){
-                 console.log('error',error);
-             });
+         function register(form){
+             console.log(form);
+             // if(form.$invalid){
+             //     console.log('invalid');
+             // } else {
+                 Register.register(ctrl.person).then(function (data,status,header)
+                 {
+                     console.log('data',data);
+                     console.log('status',status);
+                     console.log('header',header);
+                 }).catch(function (error)
+                 {
+                     console.log('error', error);
+                 });
+             // }
          }
 
          ctrl.register = register;

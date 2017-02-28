@@ -128,7 +128,15 @@ body {
   .generate-pd-bottom(@n, (@i + 1));
 }
 
+.generate-pd-top(@n, @i: 0) when (@i =< @n) {
+  .pd-top-@{i} {
+    padding-top: (@i * 10px);
+  }
+  .generate-pd-top(@n, (@i + 1));
+}
+
 .generate-pd-bottom(5);
+.generate-pd-top(5);
 
 .generate-mar-bottom(@n, @i: 0) when (@i =< @n) {
   .mar-bottom-@{i} {
@@ -137,7 +145,14 @@ body {
   .generate-mar-bottom(@n, (@i + 1));
 }
 
+.generate-mar-top(@n, @i: 0) when (@i =< @n) {
+  .mar-top-@{i} {
+    margin-top: (@i * 10px);
+  }
+  .generate-mar-top(@n, (@i + 1));
+}
 .generate-mar-bottom(5);
+.generate-mar-top(5);
 
 .page-header {
   border-bottom-color: @color-black;
@@ -346,7 +361,8 @@ body {
   &:hover, &:focus {
     color: #000;
     background-color: darken(@second-color,15%);
-    border-color: @main-color;
+    border-color: @main-color ;
+    outline: darken(@main-color,10%) solid !important;
   }
 }
 
