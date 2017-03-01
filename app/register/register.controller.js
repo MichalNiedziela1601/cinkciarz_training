@@ -9,8 +9,8 @@
          ctrl.showErrors = false;
          ctrl.errors = {};
          ctrl.response = {
-             success: true,
-             error: {}
+             success: true
+
          };
          function register(form){
              if(form.$invalid){
@@ -20,9 +20,8 @@
              } else {
                  Register.register(ctrl.person).then(function (data)
                  {
-                     console.log(data);
-                     ctrl.response.success = data.data.success;
-                     ctrl.response.error = data.data.error;
+                     ctrl.response.success = data.success;
+                     ctrl.response.error = data.error;
                      if(false === ctrl.response.success){
                          if(ctrl.response.error.constraint === 'person_email_key'){
                              ctrl.errors.message = 'This email was used to register. Try another';

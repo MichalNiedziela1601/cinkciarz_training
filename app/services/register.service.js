@@ -5,11 +5,10 @@
 
         this.register = function (person) {
             return $http.post(url, {person: person}).then(function (response) {
-                return response;
+                return response.data;
             })
                 .catch(function (error) {
-
-                    return error;
+                    return error.data;
                 });
         };
     }
