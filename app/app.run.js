@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('cinkciarzTraining')
-            .run(function (CurrenciesService, $sessionStorage,amMoment)
+            .run(function (CurrenciesService, $sessionStorage,amMoment,authManager)
             {
                 amMoment.changeLocale('pl');
                 function getCurrencies()
@@ -21,6 +21,7 @@
                 }
 
                 getCurrencies();
+                authManager.redirectWhenUnauthenticated();
 
             });
 

@@ -3,7 +3,7 @@
  */
 
 'use strict';
-
+const _ = require('lodash');
 const registerMenager = require('../business/register.menager');
 module.exports = function (server) {
 
@@ -11,25 +11,21 @@ module.exports = function (server) {
         method: 'POST',
         path: '/api/register',
         handler: function (req, res) {
-            let person = req.payload.person;
+            let person = req.payload;
             registerMenager.register(person).then((result) => {
-                res(result);
+                if(_.has(result, 'name')){
+                    result.success = false;
+                    result.error= result.detail;
+                    res(result);
+                }else {
+                    res(result);
+                }
             }).catch((error) => {
+                console.log(error);
                 res(error).code(400);
             });
         }
     });
 
-    server.route({
-        method: 'POST',
-        path: '/api/check',
-        handler: function (req, res) {
-            let data = req.payload;
 
-            registerMenager.checkPassword(data.email, data.password).then((response) => {
-
-                res(response);
-            });
-        }
-    });
-}
+};

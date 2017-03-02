@@ -3,16 +3,16 @@
  */
 'use strict';
 const logDAO = require('../dao/log.dao');
-function getLogs(){
-    return logDAO.get();
+function getLogs(id){
+    return logDAO.get(id);
 }
 
-function saveLog(log){
-    return logDAO.save(log);
+function saveLog(log,id){
+    return logDAO.save(log,id);
 }
 
-function resetLog() {
-    return logDAO.reset();
+function resetLog(id) {
+    return logDAO.reset(id);
 }
 
 module.exports = {

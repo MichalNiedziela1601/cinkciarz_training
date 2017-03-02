@@ -1,43 +1,28 @@
 'use strict';
-const Pool = require('pg').Pool;
-const config = require('../postgres_config');
-const Promise = require('bluebird');
-const pool = new Pool({
-    user: config.user,
-    password: config.password,
-    host: config.host,
-    database: config.database
-});
-
-pool.on('error',function(e, client){
-    console.log(e);
-});
-
+const db = require('./dbConnect');
 
 
 function register(person){
 
     let sql = 'INSERT INTO person (email, password, name) values ($1,$2,$3)';
 
-    return pool.query(sql, [person.email, person.password, person.name]).then(() => {
-        return Promise.resolve();
+    return db.db.none(sql, [person.email, person.password, person.name]).then(() => {
+
     }).catch((error) => {
-        console.log('error',error);
-        return Promise.reject(error);
+        return error;
+    });
+}
+
+function checkUser(person){
+    return db.db.any('SELECT id FROM person WHERE email = $1',[person.email]).then(result => {
+        return result;
     });
 }
 
 
-
-function checkPassword(email){
-    let sql = 'SELECT password FROM person WHERE email = $1';
-
-    return pool.query(sql, [email]).then((result) => {
-        return result.rows[0];
-    });
-}
 
 module.exports = {
     register,
-    checkPassword
+    checkUser
+
 };

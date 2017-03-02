@@ -4,7 +4,8 @@
         var url = 'http://localhost:3000/api/register';
 
         this.register = function (person) {
-            return $http.post(url, {person: person}).then(function (response) {
+            return $http.post(url,  person).then(function (response) {
+                console.log(response);
                 return response.data;
             })
                 .catch(function (error) {

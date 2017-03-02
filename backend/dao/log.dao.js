@@ -2,38 +2,25 @@
  * Created by sunday on 23.02.17.
  */
 'use strict';
-const Pool = require('pg').Pool;
-const config = require('../postgres_config');
-const pool = new Pool({
-    user: config.user,
-    password: config.password,
-    host: config.host,
-    database: config.database
-});
+const db = require('./dbConnect');
 
-pool.on('error', function (e, client) {
-    console.log(e);
-});
-
-
-function get() {
-    let sql = 'SELECT * FROM logs';
-    return pool.query(sql).then(result => {
-        return result.rows;
+function get(id) {
+    let sql = 'SELECT * FROM logs WHERE person_id = $1';
+    return db.db.any(sql,[id]).then(result => {
+        return result;
     });
 }
 
-function save(log) {
-    console.log(log);
-    let sql = 'INSERT INTO logs (message) values($1)';
-    return pool.query(sql, [log.message]).then(() => {
+function save(log,id) {
+    let sql = 'INSERT INTO logs (message,person_id) values($1,$2)';
+    return db.db.any(sql, [log.message,id]).then(() => {
         return true;
     });
 }
 
-function reset() {
-    let sql = 'DELETE FROM logs';
-    return pool.query(sql).then(() => {
+function reset(id) {
+    let sql = 'DELETE FROM logs WHERE person_id = $1';
+    return db.db.any(sql,[id]).then(() => {
         return true;
     });
 }

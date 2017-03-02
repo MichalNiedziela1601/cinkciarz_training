@@ -4,7 +4,7 @@
 (function(){
     'use strict';
 
-     function RegisterController($timeout,Register){
+     function RegisterController($timeout,$location,Register,Auth){
         var ctrl = this;
          ctrl.showErrors = false;
          ctrl.errors = {};
@@ -20,15 +20,21 @@
              } else {
                  Register.register(ctrl.person).then(function (data)
                  {
+                     console.log(data);
                      ctrl.response.success = data.success;
                      ctrl.response.error = data.error;
                      if(false === ctrl.response.success){
-                         if(ctrl.response.error.constraint === 'person_email_key'){
+                         if(ctrl.response.error === 'Istnieje już taka nazwa użytkownika'){
                              ctrl.errors.message = 'This email was used to register. Try another';
                          }
+                         ctrl.showErrors = true;
+                         $timeout(function() { ctrl.showErrors = false; ctrl.response.success = true;}, 3500);
+                     }else{
+                         Auth.login(ctrl.person.email,ctrl.person.password).then(function(){
+                             $location.path('/start')
+                         })
                      }
-                     ctrl.showErrors = true;
-                     $timeout(function() { ctrl.showErrors = false; ctrl.response.success = true;}, 3500);
+
 
                  }).catch(function (error)
                  {
@@ -42,7 +48,7 @@
          ctrl.register = register;
     }
     angular.module('cinkciarzTraining')
-        .controller('RegisterController', ['$timeout','Register',RegisterController]);
+        .controller('RegisterController', ['$timeout','$location','Register','Auth',RegisterController]);
 
 
 })();

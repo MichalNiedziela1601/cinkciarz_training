@@ -29,7 +29,7 @@
 
                 WalletService.reset().then(function(){
                     LogFactory.empty().then(function(){
-                        $location.path('/');
+                        $location.path('/start');
                     });
                 });
             });

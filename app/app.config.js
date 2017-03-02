@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    function config($routeProvider) {
+    function config($routeProvider,$httpProvider,jwtOptionsProvider) {
         $routeProvider
-                .when('/',{
+                .when('/start',{
                     templateUrl: 'startCtrl/start.html',
                     controller: 'StartController',
                     controllerAs: 'startCtrl'
@@ -33,7 +33,22 @@
                 controller: 'RegisterController',
                 controllerAs: 'registerCtrl'
             })
-                .otherwise({ redirectTo: '/'});
+            .when('/login',{
+                templateUrl : 'login/login.tpl.html',
+                controller: 'LoginController',
+                controllerAs : 'loginCtrl'
+            })
+                .otherwise({ redirectTo: '/login'});
+
+        jwtOptionsProvider.config({
+            whiteListedDomains: ['localhost'],
+            tokenGetter: ['Auth',function(Auth){
+                return Auth.getToken();
+            }],
+            unauthenticatedRedirectPath: '#/login'
+        });
+
+        $httpProvider.interceptors.push('jwtInterceptor');
 
     }
 
