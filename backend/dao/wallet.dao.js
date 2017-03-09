@@ -1,45 +1,36 @@
 'use strict';
-const Pool = require('pg').Pool;
-const config = require('../postgres_config');
-const pool = new Pool({
-    user: config.user,
-    password: config.password,
-    host: config.host,
-    database: config.database
-});
+const db = require('./dbConnect');
 
-pool.on('error',function(e, client){
-    console.log(e);
-});
+function init(wallet,id){
+    let sql = 'INSERT INTO wallet (pln,eur,gbp,usd,person_id) values ($1,$2,$3,$4,$5)';
 
-function init(wallet){
-    let sql = 'INSERT INTO wallet ("PLN","EUR","GBP","USD") values ($1,$2,$3,$4)';
+    return db.db.none(sql,[wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD, id]).then(() => {
 
-    return pool.query(sql,[wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD]).then(res => {
-        return res;
     });
 }
 
-function get(){
-    let sql = 'SELECT "PLN","EUR","GBP","USD" FROM wallet';
-    return pool.query(sql).then(result => {
-        return result.rows[0];
+function get(id){
+    let sql = 'SELECT pln, eur,gbp, usd FROM wallet WHERE person_id = $1';
+    return db.db.any(sql, [id]).then(result => {
+        return result;
+    }).catch(error => {
+        return error;
     });
 }
 
-function save(wallet)
+function save(wallet,id)
 {
-    let sql = 'UPDATE wallet SET "PLN" = $1, "EUR" = $2, "GBP" = $3, "USD" = $4';
-    return pool.query(sql, [wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD]).then(() => {
-        return true;
+    let sql = 'UPDATE wallet SET pln = $1, eur = $2, gbp = $3, usd = $4 WHERE person_id = $5';
+    return db.db.any(sql, [wallet.PLN, wallet.EUR, wallet.GBP, wallet.USD,id]).then(() => {
+
     });
 
 }
 
-function reset(){
-   let sql = 'DELETE FROM wallet';
-    return pool.query(sql).then(() => {
-        return true;
+function reset(id){
+    let sql = 'UPDATE wallet SET pln = $1, eur = $2, gbp = $3, usd = $4 WHERE person_id = $5';
+    return db.db.any(sql, [0, 0, 0, 0,id]).then(() => {
+
     });
 
 }

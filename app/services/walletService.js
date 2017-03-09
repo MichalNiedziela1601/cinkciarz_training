@@ -2,19 +2,38 @@
 {
     'use strict';
 
-    function WalletService($http, LogFactory)
+    function WalletService($http, LogFactory, lodash)
     {
         var url = 'http://localhost:3000/api/wallet';
         this.getWallet = function ()
         {
             return $http.get(url).then(function(response){
-                return response.data;
-            });
+
+                if(lodash.isEmpty(response.data) || lodash.isEqual(response.data,[{ pln: 0, eur: 0, gbp: 0, usd: 0 }])) {
+                    return [];
+
+                }else {
+                    var wallet = {
+                        PLN: response.data[0].pln,
+                        EUR: response.data[0].eur,
+                        GBP: response.data[0].gbp,
+                        USD: response.data[0].usd
+                    };
+                    return wallet;
+                }
+
+            })
+                .catch(function(error){
+                    return error;
+                });
         };
 
         this.setStartValue = function(value){
-            return $http.post(url, { PLN: value, GBP: 0, EUR: 0, USD: 0}).then(function(data){
-                return data;
+            var wallet =  { PLN: value, GBP: 0, EUR: 0, USD: 0};
+            return $http.post(url,wallet).then(function(){
+                return true;
+            }).catch(function(error){
+                return error;
             });
         };
 

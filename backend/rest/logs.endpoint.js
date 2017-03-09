@@ -8,8 +8,12 @@ module.exports = function(server){
     server.route({
         method: 'GET',
         path: '/api/log',
+        config: {
+            auth: 'token'
+        },
         handler: function(req,res){
-            logManager.getLogs().then(result => {
+            let id = req.auth.credentials.id;
+            logManager.getLogs(id).then(result => {
                 res(result);
             });
         }
@@ -17,18 +21,26 @@ module.exports = function(server){
     server.route({
         method: 'POST',
         path: '/api/log',
+        config: {
+            auth: 'token'
+        },
         handler: function(req,res){
+            let id = req.auth.credentials.id;
             let log = req.payload;
-            logManager.saveLog(log).then(result => {
-                res(result);
+            logManager.saveLog(log,id).then(() => {
+                res();
             });
         }
     });
     server.route({
         method: 'DELETE',
         path: '/api/log',
+        config: {
+            auth: 'token'
+        },
         handler: function(req,res){
-            logManager.resetLog().then(() => {
+            let id = req.auth.credentials.id;
+            logManager.resetLog(id).then(() => {
                 res();
             });
         }
