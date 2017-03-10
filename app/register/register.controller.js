@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 24.02.17.
- */
 (function(){
     'use strict';
 
@@ -20,7 +17,6 @@
              } else {
                  Register.register(ctrl.person).then(function (data)
                  {
-                     console.log(data);
                      ctrl.response.success = data.success;
                      ctrl.response.error = data.error;
                      if(false === ctrl.response.success){
@@ -31,8 +27,8 @@
                          $timeout(function() { ctrl.showErrors = false; ctrl.response.success = true;}, 3500);
                      }else{
                          Auth.login(ctrl.person.email,ctrl.person.password).then(function(){
-                             $location.path('/start')
-                         })
+                             $location.path('/start');
+                         });
                      }
 
 

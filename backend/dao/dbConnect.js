@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 02.03.17.
- */
 var promise = require('bluebird');
 var options = {
     promiseLib: promise

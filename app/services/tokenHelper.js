@@ -12,6 +12,4 @@
     angular.module('cinkciarzTraining')
         .service('TokenHelper', ['jwtHelper','$sessionStorage',TokenHelper]);
 
-
-
 })();

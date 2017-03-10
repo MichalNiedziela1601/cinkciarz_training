@@ -11,9 +11,9 @@
 </head>
 <body>
 
-<div ng-include="'navbarCtrl/navbar.html'"></div>
+<div ng-include="'navbar/navbar.html'"></div>
 
-<div class="container">
+<div class="container mar-bottom-3">
 
     <div ng-view></div>
 </div>
@@ -33,14 +33,14 @@
 <script src="app.run.js"></script>
 
 <!-- Controllers-->
-<script src="startCtrl/startCtrl.js"></script>
-<script src="mainCtrl/mainCtrl.js"></script>
+<script src="start/startCtrl.js"></script>
+<script src="main/mainCtrl.js"></script>
 <script src="info/infoCtrl.js"></script>
-<script src="buyCtrl/buyCtrl.js"></script>
-<script src="sellCtrl/sellCtrl.js"></script>
-<script src="mainCtrl/modalConfirmCtrl.js"></script>
-<script src="navbarCtrl/navbarCtrl.js"></script>
-<script src="startCtrl/modalController.js"></script>
+<script src="buy/buyCtrl.js"></script>
+<script src="sell/sellCtrl.js"></script>
+<script src="main/modalConfirmCtrl.js"></script>
+<script src="navbar/navbarCtrl.js"></script>
+<script src="start/modalController.js"></script>
 <script src="register/register.controller.js"></script>
 <script src="login/login.controller.js"></script>
 <!-- Directives-->
@@ -54,7 +54,6 @@
 <script src="services/logFactory.js"></script>
 <script src="services/register.service.js"></script>
 <script src="services/auth.service.js"></script>
-<!--<script src="services/auth.interceptor.js"></script>-->
 <script src="services/tokenHelper.js"></script>
 </body>
 </html>

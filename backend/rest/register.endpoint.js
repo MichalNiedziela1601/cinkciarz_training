@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 24.02.17.
- */
 
 'use strict';
 const _ = require('lodash');

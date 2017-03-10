@@ -1,7 +1,7 @@
 <div class="row mar-top-5">
     <div class="col-md-offset-3 col-md-6 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0 register-contener">
         <div class="page-header"><h2 class="text-center">LOGIN</h2></div>
-        <form ng-submit="loginCtrl.login()" name="loginForm" novalidate>
+        <form ng-submit="loginCtrl.login(loginForm)" name="loginForm" novalidate>
 
             <div class="form-group">
                 <input type="email" name="eMail" id="e-mail"
@@ -24,36 +24,32 @@
             </div>
            
 
-            <!--<div ng-show="loginCtrl.showErrors" class="animate-show-hide">-->
-                <!--<div ng-messages="loginForm.eMail.$error" role="alert">-->
-                    <!--<p ng-message="required" class="alert alert-danger ">E-mail is requried</p>-->
-                    <!--<p ng-message="email" class="alert alert-danger ">E-mail is not valid</p>-->
-                <!--</div>-->
+            <div ng-show="loginCtrl.showErrors" class="animate-show-hide">
+                <div ng-messages="loginForm.eMail.$error" role="alert">
+                    <p ng-message="required" class="alert alert-danger ">E-mail is requried</p>
+                    <p ng-message="email" class="alert alert-danger ">E-mail is not valid</p>
+                </div>
 
-                <!--<div ng-messages="loginForm.password.$error" role="alert">-->
-                    <!--<p ng-message="required" class="alert alert-danger ">Password is required</p>-->
-                    <!--<p ng-message="pattern" class="alert alert-danger ">-->
-                        <!--Password must contains at least 1 upper letter, 1 lower letter, 1 digits and 1 special characters</p>-->
-                    <!--<p ng-message="minlength" class="alert alert-danger ">Password min length is 6</p>-->
-                    <!--<p ng-message="maxlength" class="alert alert-danger ">Password max length is 30</p>-->
-                <!--</div>-->
+                <div ng-messages="loginForm.password.$error" role="alert">
+                    <p ng-message="required" class="alert alert-danger ">Password is required</p>
+                    <p ng-message="pattern" class="alert alert-danger ">
+                        Password must contains at least 1 upper letter, 1 lower letter, 1 digits and 1 special characters</p>
+                    <p ng-message="minlength" class="alert alert-danger ">Password min length is 6</p>
+                    <p ng-message="maxlength" class="alert alert-danger ">Password max length is 30</p>
+                </div>
 
-                <!--<div ng-messages="loginForm.username.$error" role="alert">-->
-                    <!--<p ng-message="required" class="alert alert-danger ">Username is required</p>-->
-                    <!--<p ng-message="minlength" class="alert alert-danger ">Username min length is 3</p>-->
-                <!--</div>-->
 
-                <!--<div ng-hide="loginCtrl.response.success">-->
+                <div ng-hide="loginCtrl.response.success">
 
-                    <!--<p class="alert alert-danger">{{loginCtrl.errors.message}}</p>-->
+                    <p class="alert alert-danger">{{loginCtrl.errors.message}}</p>
 
-                <!--</div>-->
-            <!--</div>-->
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="login-submit" id="login-submit" tabindex="4"
+                        <input type="submit" name="login-submit" id="login-submit" tabindex="3"
                                class="form-control btn btn-login" value="Login">
                     </div>
                 </div>

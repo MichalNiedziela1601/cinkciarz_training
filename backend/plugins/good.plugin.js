@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 22.02.17.
- */
 'use strict';
 const Good = require('good');
 

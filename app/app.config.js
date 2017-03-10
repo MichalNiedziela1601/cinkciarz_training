@@ -4,12 +4,12 @@
     function config($routeProvider,$httpProvider,jwtOptionsProvider) {
         $routeProvider
                 .when('/start',{
-                    templateUrl: 'startCtrl/start.html',
+                    templateUrl: 'start/start.html',
                     controller: 'StartController',
                     controllerAs: 'startCtrl'
                 })
                 .when('/main', {
-                    templateUrl: 'mainCtrl/main.html',
+                    templateUrl: 'main/main.html',
                     controller: 'MainCtrl',
                     controllerAs: 'mainCtrl'
                 })
@@ -19,12 +19,12 @@
                     controllerAs: 'infoCtrl'
                 })
                 .when('/buy/:currency', {
-                    templateUrl: 'buyCtrl/buy.html',
+                    templateUrl: 'buy/buy.html',
                     controller: 'BuyController',
                     controllerAs: 'buyCtrl'
                 })
                 .when('/sell/:currency',{
-                    templateUrl: 'sellCtrl/sell.html',
+                    templateUrl: 'sell/sell.html',
                     controller: 'SellController',
                     controllerAs: 'sellCtrl'
                 })

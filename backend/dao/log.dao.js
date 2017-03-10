@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 23.02.17.
- */
 'use strict';
 const db = require('./dbConnect');
 

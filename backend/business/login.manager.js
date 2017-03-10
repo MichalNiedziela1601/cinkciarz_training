@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 02.03.17.
- */
 'use strict';
 const loginDAO = require('../dao/login.dao');
 const bcrypt = require('bcrypt');

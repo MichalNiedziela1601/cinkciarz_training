@@ -20,7 +20,7 @@
         function reset()
         {
             ctrl.modalInstance = $uibModal.open({
-                animation: true, templateUrl: 'mainCtrl/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
+                animation: true, templateUrl: 'main/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
 
             });
 
