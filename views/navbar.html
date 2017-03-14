@@ -1,0 +1,23 @@
+<nav class="navbar navbar-default" role="navigation" ng-controller="NavbarController as navbarCtrl">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" ng-click="navbarCtrl.toggleCollapse()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">
+                <h1><span class="glyphicon glyphicon-euro"></span> Trener Cinkciarza</h1>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" ng-class="!navbarCtrl.navCollapsed && 'in'">
+            <ul class="nav navbar-nav">
+                <li ng-class="{current: navbarCtrl.isActive('/main')}"><a href="#/main" ng-click="navbarCtrl.toggleCollapse()">Home <span
+                        class="sr-only"></span> </a></li>
+                <li ng-class="{current: navbarCtrl.isActive('/info')}"><a href="#/info" ng-click="navbarCtrl.toggleCollapse()">Information</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

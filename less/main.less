@@ -4,15 +4,13 @@
 @side: top;
 @second-color: #BBB88A;
 @light-color: #FFFEEA;
+@icon-font-path: "../bower_components/bootstrap/fonts/";
 
 body {
   font-size: 16px;
   line-height: 150%;
 }
 
-.cover {
-  background-size: cover;
-}
 
 .main {
   background-color: @main-color;
@@ -42,7 +40,7 @@ body {
   .responsive(425px, { .pd-side(0, 7px, 0, 7px); })
 }
 
-.panel {
+.panel-no-border {
   border: 0;
 }
 
@@ -96,8 +94,7 @@ body {
       font-weight: bolder;
       font-size: 35px;
       animation: rotateY 2s linear infinite;
-      .responsive(767px,{ font-size: 28px;
-      })
+      .responsive(767px, { font-size: 28px; })
     }
   }
 }
@@ -118,8 +115,6 @@ body {
   border-radius: 10px;
   width: 100%;
   .pd-side(25px, 35px, 35px, 35px);
-  -webkit-box-shadow: 3px 3px 1px 1px lightgrey;
-  -moz-box-shadow: 33px 3px 1px 1px lightgrey;
   box-shadow: 3px 3px 1px 1px lightgrey;
 
   .responsive(425px, { .pd-side(25px, 8px, 35px, 8px); })
@@ -146,10 +141,7 @@ body {
 
 .page-header {
   border-bottom-color: @color-black;
-  .responsive(560px, {
-    text-align: center;
-    margin-top: 20px;
-  })
+  .responsive(560px, { text-align: center; margin-top: 20px; })
 }
 
 .text-bold {
@@ -167,7 +159,7 @@ body {
 }
 
 .td-mixin {
-  .pd-side(5px, 8px, 5px, 8px);
+  .pd-side(5px, 10px, 10px, 8px);
   text-align: center;
   vertical-align: middle;
   font-size: 16px;
@@ -179,44 +171,48 @@ body {
 }
 
 .table-div {
-  display: block;
+  display: table;
   width: 100%;
-  .responsive(560px,{
-    h2:nth-of-type(1) {
-      font-size: 1.7em;
-    }
-
-  })
+  .responsive(560px, { h2:nth-of-type(1) {
+    font-size: 1.7em;
+  } })
 }
 
 .my-table {
   margin-left: 15px;
   .pd-side(5px, 8px, 5px, 28px);
 
+  thead {
+    tr {
+      border: 0;
+    }
+  }
+
   th {
-    .td-mixin
+    .td-mixin;
+    background-color: darken(@main-color, 10%);
+  }
+
+  tr {
+    border-bottom: 1px solid black;
   }
 
   td {
     .td-mixin;
+
   }
 
-  .responsive(535px, {
-    .pd-side(5px, 2px, 5px, 2px);
-    margin-left: 0;
-    thead {
+  .responsive(535px, { .pd-side(5px, 2px, 5px, 2px); margin-left: 0; thead {
     position: absolute;
     top: -9999px;
     left: -9999px;
-  }
-    td:nth-of-type(1) {
+  } td:nth-of-type(1) {
       width: 100%;
       display: block;
       position: relative;
       margin-top: 8px;
       background-color: @second-color;
-    }
-    td:nth-of-type(2) {
+    } td:nth-of-type(2) {
         width: 50%;
         display: inline-block;
         position: relative;
@@ -224,8 +220,7 @@ body {
           content: 'Sprzedaż';
           font-weight: bold;
         }
-      }
-    td:nth-of-type(3) {
+      } td:nth-of-type(3) {
           width: 50%;
           display: inline-block;
           position: relative;
@@ -233,17 +228,49 @@ body {
             content: 'Kupno';
             font-weight: bold;
           }
-        }
-    td:nth-of-type(4) {
+        } td:nth-of-type(4) {
             width: 50%;
             display: inline-block;
             position: relative;
-          }
-    td:nth-of-type(5) {
+          } td:nth-of-type(5) {
               width: 50%;
               display: inline-block;
               position: relative;
             } })
+}
+
+
+.triangle-up {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid;
+}
+
+.triangle-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 10px solid;
+}
+
+.color-border-bottom-red {
+  border-bottom-color: red;
+}
+
+.color-border-top-green {
+  border-top-color: green;
+}
+.color-border-top-red {
+  border-top-color: red;
+}
+
+.color-border-bottom-green {
+  border-bottom-color: green;
 }
 
 
@@ -261,6 +288,33 @@ body {
   padding: 0 10px;
 }
 
+.app-modal-window .modal-dialog {
+  width: 350px;
+}
+
+.app-modal-window .modal-body {
+  height: 3em;
+}
+
+.input-modal {
+  margin-top: -5px;
+  width: 100%;
+}
+
+.panel-scroll {
+  overflow-y: scroll;
+  max-height: 300px;
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: darken(@main-color,8%);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: @second-color;
+  }
+
+}
 
 @keyframes rotateY {
   100% {

@@ -1,15 +1,12 @@
-/**
- * Created by sunday on 12/2/16.
- */
 (function ()
 {
     'use strict';
 
     function InfoController()
     {
-        var vm = this;
+        var ctrl = this;
 
-        vm.status = {
+        ctrl.status = {
             isFirstOpen: true, isFirstDisabled: false
         };
     }

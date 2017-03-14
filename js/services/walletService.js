@@ -1,38 +1,38 @@
-/**
- * Created by sunday on 12/2/16.
- */
 (function ()
 {
     'use strict';
-    angular.module('cinkciarzTraining')
-            .service('WalletService', WalletService);
 
-    function WalletService($localStorage, $window)
+    function WalletService($localStorage, LogFactory)
     {
-
         this.getWallet = function ()
         {
             return $localStorage.wallet;
         };
 
-        this.buy = function (code, rate, value)
+        this.sell = function (code, rate, value)
         {
             $localStorage.wallet.PLN += (rate * value);
             $localStorage.wallet[code] -= value;
+            LogFactory.addLog('Sprzedałeś ' + value + ' ' + code + ' zyskując ' + (rate * value).toFixed(2) + ' zł');
         };
 
-        this.sell = function (code, rate, value)
+        this.buy = function (code, rate, value)
         {
             $localStorage.wallet[code] += value;
             $localStorage.wallet.PLN -= (rate * value);
+            LogFactory.addLog('Kupiłeś ' + value + ' ' + code + ' za ' + (rate * value).toFixed(2) + ' zł');
         };
 
         this.reset = function ()
         {
             $localStorage.$reset();
-            $window.location.reload();
         };
 
     }
+
+
+    angular.module('cinkciarzTraining')
+            .service('WalletService', WalletService);
+
 
 })();

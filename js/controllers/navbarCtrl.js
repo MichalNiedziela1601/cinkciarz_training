@@ -1,29 +1,30 @@
-/**
- * Created by student on 13.12.16.
- */
-(function(){
+(function ()
+{
     'use strict';
 
-    function NavbarController($location){
-        var vm = this;
-        vm.navCollapsed = true;
+    function NavbarController($location)
+    {
+        var ctrl = this;
+        ctrl.navCollapsed = true;
 
-        function toggleCollapse(){
-            vm.navCollapsed = !vm.navCollapsed;
+        function toggleCollapse()
+        {
+            ctrl.navCollapsed = !ctrl.navCollapsed;
         }
 
-        function isActive(location){
+        function isActive(location)
+        {
             var active = (location === $location.path());
             return active;
         }
 
-        vm.toggleCollapse = toggleCollapse;
-        vm.isActive = isActive;
+        ctrl.toggleCollapse = toggleCollapse;
+        ctrl.isActive = isActive;
 
     }
 
     angular.module('cinkciarzTraining')
-        .controller('NavbarController', NavbarController);
+            .controller('NavbarController', NavbarController);
 
 
 })();
