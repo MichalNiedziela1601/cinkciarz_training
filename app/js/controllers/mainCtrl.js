@@ -123,6 +123,7 @@
         ctrl.reset = reset;
         ctrl.checkCurrencyWallet = checkCurrencyWallet;
         ctrl.toggleRandomRates = toggleRandomRates;
+        ctrl.stopRandom = stopRandom;
 
 
         //////////////////////
