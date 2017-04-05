@@ -30,9 +30,14 @@ gulp.task('less', function ()
 gulp.task('browserSync', function ()
 {
     browserSync.init({
+        ui: {
+            port: 3002
+        },
         server: {
             baseDir: 'app'
-        }
+
+        },
+        port: 3001
     });
 });
 
@@ -40,7 +45,7 @@ gulp.task('watch', ['browserSync', 'less'], function ()
 {
     gulp.watch('app/less/**/*.less', ['less']);
     gulp.watch('app/**/*.html', browserSync.reload);
-    gulp.watch('app/js/**/*.js', browserSync.reload);
+    gulp.watch('app/**/*.js', browserSync.reload);
 });
 
 gulp.task('test', function (done)

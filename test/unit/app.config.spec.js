@@ -22,7 +22,7 @@ describe('app.config.js', function ()
         {
             expect(route.routes['/'].templateUrl).toBe('views/start.html');
         });
-        it('should has \'startCtrl\' shortcut', function ()
+        it('should has \'start\' shortcut', function ()
         {
             expect(route.routes['/'].controllerAs).toBe('startCtrl');
         });
@@ -38,7 +38,7 @@ describe('app.config.js', function ()
         {
             expect(route.routes['/main'].templateUrl).toBe('views/main.html');
         });
-        it('should has \'mainCtrl\' shortcut', function ()
+        it('should has \'main\' shortcut', function ()
         {
             expect(route.routes['/main'].controllerAs).toBe('mainCtrl');
         });
@@ -70,7 +70,7 @@ describe('app.config.js', function ()
         {
             expect(route.routes['/buy/:currency'].templateUrl).toBe('views/buy.html');
         });
-        it('should has \'buyCtrl\' shortcut', function ()
+        it('should has \'buy\' shortcut', function ()
         {
             expect(route.routes['/buy/:currency'].controllerAs).toBe('buyCtrl');
         });
@@ -90,7 +90,7 @@ describe('app.config.js', function ()
         {
             expect(route.routes['/sell/:currency'].templateUrl).toBe('views/sell.html');
         });
-        it('should has \'sellCtrl\' shortcut', function ()
+        it('should has \'sell\' shortcut', function ()
         {
             expect(route.routes['/sell/:currency'].controllerAs).toBe('sellCtrl');
         });

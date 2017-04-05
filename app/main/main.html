@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="panel-body panel-scroll">
                                     <ul ng-repeat="log in mainCtrl.logs track by $index" class="list-unstyled">
-                                        <li>{{$index + 1}}. Dnia {{log.date | date: 'dd-MM-yy HH:mm'}} {{log.message}}</li>
+                                        <li>{{$index + 1}}. Dnia {{log.data}} {{log.message}}</li>
                                     </ul>
                                 </div>
                                 <div class="panel-footer second"></div>

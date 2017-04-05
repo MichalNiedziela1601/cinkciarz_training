@@ -1,18 +1,25 @@
 (function ()
 {
     'use strict';
-
-    function SellController($routeParams, WalletService, $timeout, ValidateService, RatesFactory)
+    function BuyController($routeParams, WalletService, $timeout, ValidateService, RatesFactory)
     {
+
         var ctrl = this;
         ctrl.currency = $routeParams.currency;
-        ctrl.rate = {};
+        ctrl.rates = RatesFactory.getRates();
         ctrl.value = 0;
-
-        ctrl.wallet = WalletService.getWallet();
         ctrl.errorMessage = '';
 
-        ////////////////////
+        ctrl.getWallet = function()
+        {
+            WalletService.getWallet().then(function (data)
+            {
+                ctrl.wallet = data;
+            });
+        };
+        ctrl.getWallet();
+
+        ///////////////////
 
         function showTitle()
         {
@@ -25,7 +32,7 @@
             }
         }
 
-        function sell()
+        function buy()
         {
             if (ValidateService.validateEmpty(ctrl.value)) {
                 ctrl.errorMessage = ValidateService.getValues('Nie wpisałeś ilości');
@@ -44,28 +51,27 @@
                 }, 3000);
                 return;
             }
-            if (ctrl.value > ctrl.wallet[ctrl.currency]) {
+
+            if (ctrl.value * ctrl.rate.buy > ctrl.wallet.PLN) {
                 ctrl.errorMessage = ValidateService.getValues('Za mało środków');
                 $timeout(function ()
                 {
                     ctrl.errorMessage = ValidateService.getValues('');
                 }, 3000);
-
             } else {
-                WalletService.sell(ctrl.rate.code, ctrl.rate.sell, ctrl.value);
-                ctrl.wallet = WalletService.getWallet();
+                WalletService.buy(ctrl.wallet,ctrl.rate.code, ctrl.rate.buy, ctrl.value).then(function(data){
+                    ctrl.getWallet();
+                });
+
                 ctrl.value = 0;
             }
 
         }
 
-        function sellCost()
-        {
-            return (ctrl.value * ctrl.rate.sell) > 0 ? (ctrl.value * ctrl.rate.sell) : 0;
-        }
 
         function getCurrencies()
         {
+
             ctrl.rates = RatesFactory.getRates();
             angular.forEach(ctrl.rates, function (rate)
             {
@@ -73,22 +79,25 @@
                     ctrl.rate = rate;
                 }
             });
-            ctrl.sellCost = sellCost;
+
+            ctrl.buyCost = function ()
+            {
+                return (ctrl.value * ctrl.rate.buy) > 0 ? (ctrl.value * ctrl.rate.buy) : 0;
+            };
 
         }
 
+////////////////////////
 
         ctrl.showTitle = showTitle;
-        ctrl.sell = sell;
+        ctrl.buy = buy;
+        ctrl.getCUrrencies = getCurrencies();
 
-        ctrl.getCurrencies = getCurrencies();
-
-
-        ///////////////////////
 
     }
 
-
     angular.module('cinkciarzTraining')
-            .controller('SellController', SellController);
+            .controller('BuyController', BuyController);
+
+
 })();

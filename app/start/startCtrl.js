@@ -2,7 +2,7 @@
 {
     'use strict';
 
-    function StartController($localStorage, $location, $uibModal, $sessionStorage)
+    function StartController($location, $uibModal, $sessionStorage, WalletService,lodash)
     {
         var ctrl = this;
         $sessionStorage.isRandom = false;
@@ -23,25 +23,30 @@
             {
 
                 ctrl.startVal = parseInt(startValue, 10);
-                $localStorage.$default({
-                    wallet: {
-                        PLN: ctrl.startVal ? ctrl.startVal : 0, EUR: 0, USD: 0, GBP: 0
-                    }, log: []
+                WalletService.setStartValue(ctrl.startVal).then(function(){
 
+                     $location.path('/main');
                 });
-                $location.path('/main');
+
             });
         };
-
         ctrl.checkStorage = function()
         {
-            if (null == $localStorage.wallet) {
+            if (null == ctrl.wallet || lodash.isEqual(ctrl.wallet, { PLN: 0, EUR: 0, GBP: 0, USD: 0}) || lodash.isEmpty(ctrl.wallet)) {
                 ctrl.open('sm');
             } else {
                 $location.path('/main');
             }
         };
-        ctrl.checkStorage();
+        ctrl.getWallet = function(){
+            WalletService.getWallet().then(function(data){
+                ctrl.wallet = data;
+                ctrl.checkStorage();
+            });
+        };
+        ctrl.getWallet();
+
+
     }
 
 
