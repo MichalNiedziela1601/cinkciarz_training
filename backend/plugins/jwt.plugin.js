@@ -1,6 +1,3 @@
-/**
- * Created by sunday on 06.03.17.
- */
 'use strict';
 const config = require('../config');
 const loginManager = require('../business/login.manager');
