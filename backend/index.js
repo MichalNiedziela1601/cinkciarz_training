@@ -20,7 +20,6 @@ module.exports = function ()
 
     server.start((err) =>
     {
-
         if (err) {
             throw err;
         }

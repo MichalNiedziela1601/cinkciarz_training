@@ -1,7 +1,7 @@
 'use strict';
 const registerDAO = require('../dao/register.dao');
 const Promise = require('bluebird');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const _ = require('lodash');
 
 const Joi = require('joi');

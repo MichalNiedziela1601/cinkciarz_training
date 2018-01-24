@@ -1,6 +1,6 @@
 'use strict';
 const loginDAO = require('../dao/login.dao');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const token = require('../util/token');
 const Promise = require('bluebird');
 
