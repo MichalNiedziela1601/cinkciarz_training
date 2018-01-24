@@ -2,40 +2,47 @@
 {
     'use strict';
 
-    function MainCtrl($location, WalletService, $localStorage, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
+    function MainCtrl($location, WalletService, $uibModal, RandomCurrencyService, $interval, $sessionStorage, RatesFactory, LogFactory)
     {
         var ctrl = this;
         ctrl.stop = null;
-        ctrl.wallet = WalletService.getWallet();
+        ctrl.getWallet = function()
+        {
+            WalletService.getWallet().then(function (data)
+            {
+                ctrl.wallet = data;
+            });
+        };
         ctrl.rates = RatesFactory.getRates();
         ctrl.randomRates = [];
-        ctrl.logs = LogFactory.getLog();
         ctrl.showArrows = false;
-
         ////////////////////////////////
         function reset()
         {
             ctrl.modalInstance = $uibModal.open({
-                animation: true, templateUrl: 'views/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
+                animation: true, templateUrl: 'main/modalConfirm.html', controller: 'ModalConfirmController', controllerAs: 'ctrl', backdrop: 'static'
 
             });
 
             ctrl.modalInstance.result.then(function ()
             {
-                $location.path('/');
-                LogFactory.empty();
-                WalletService.reset();
+
+                WalletService.reset().then(function(){
+                    LogFactory.empty().then(function(){
+                        $location.path('/start');
+                    });
+                });
             });
         }
 
         function checkCurrencyWallet(code)
         {
 
-            if (null == $localStorage.wallet) {
+            if (null == ctrl.wallet) {
 
                 return false;
             } else {
-                return $localStorage.wallet[code] <= 0;
+                return ctrl.wallet[code] <= 0;
 
             }
         }
@@ -65,6 +72,7 @@
 
         function stopRandom()
         {
+
             $interval.cancel(ctrl.stop);
             ctrl.showArrows = false;
         }
@@ -87,7 +95,6 @@
         function showLog()
         {
             ctrl.logs = LogFactory.getLog();
-            console.log(ctrl.logs);
         }
 
         ctrl.diffBuy = function (code, buy)
@@ -116,7 +123,15 @@
             }
         }
 
+        function getLog(){
+            LogFactory.getLog().then(function (result) {
+                ctrl.logs = result;
+            });
+        }
+
         ///////////////////////////////
+        getLog();
+        ctrl.getWallet();
         ctrl.showLog = showLog;
         checkRandom();
         ctrl.showLog();

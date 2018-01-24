@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation" ng-controller="NavbarController as navbarCtrl">
+<nav class="navbar navbar-default" role="navigation" ng-controller="NavbarController as navbarCtrl" ng-hide="navbarCtrl.checkPath()">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-click="navbarCtrl.toggleCollapse()">
@@ -18,6 +18,10 @@
                         class="sr-only"></span> </a></li>
                 <li ng-class="{current: navbarCtrl.isActive('/info')}"><a href="#/info" ng-click="navbarCtrl.toggleCollapse()">Information</a></li>
             </ul>
+            <div ng-if="navbarCtrl.isAuthenticated" class="pull-right  mar-top-2">
+                <span class="media-middle">Zalogowany jako: {{navbarCtrl.token.name}}</span>
+                <a href="#/" ng-click="navbarCtrl.logout()">
+                <button type="button" class="btn btn-primary">Logout</button></a> </div>
         </div>
     </div>
 </nav>

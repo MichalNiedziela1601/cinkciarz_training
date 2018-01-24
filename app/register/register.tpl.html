@@ -1,0 +1,70 @@
+<div class="row mar-top-5">
+    <div class="col-md-offset-3 col-md-6 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0 register-contener">
+        <div class="page-header"><h2 class="text-center">REGISTER</h2></div>
+        <form ng-submit="registerCtrl.register(registerForm)" name="registerForm" novalidate>
+
+            <div class="form-group">
+                <input type="email" name="eMail" id="e-mail"
+                       tabindex="1"
+                       ng-model="registerCtrl.person.email"
+                       class="form-control"
+                       placeholder="E-mail"
+                        required>
+
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" tabindex="2"
+                       ng-model="registerCtrl.person.password"
+                       class="form-control"
+                       placeholder="Password"
+                       required
+                       ng-pattern="/^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).*$/"
+                       ng-minlength="6"
+                       ng-maxlength="30">
+            </div>
+            <div class="form-group">
+                <input type="text" name="username" id="username"
+                       tabindex="3"
+                       ng-model="registerCtrl.person.name"
+                       class="form-control"
+                       placeholder="Username"
+                       required ng-minlength="3">
+            </div>
+
+            <div ng-show="registerCtrl.showErrors" class="animate-show-hide">
+                <div ng-messages="registerForm.eMail.$error" role="alert">
+                    <p ng-message="required" class="alert alert-danger ">E-mail is requried</p>
+                    <p ng-message="email" class="alert alert-danger ">E-mail is not valid</p>
+                </div>
+
+                <div ng-messages="registerForm.password.$error" role="alert">
+                    <p ng-message="required" class="alert alert-danger ">Password is required</p>
+                    <p ng-message="pattern" class="alert alert-danger ">
+                        Password must contains at least 1 upper letter, 1 lower letter, 1 digits and 1 special characters</p>
+                    <p ng-message="minlength" class="alert alert-danger ">Password min length is 6</p>
+                    <p ng-message="maxlength" class="alert alert-danger ">Password max length is 30</p>
+                </div>
+
+                <div ng-messages="registerForm.username.$error" role="alert">
+                    <p ng-message="required" class="alert alert-danger ">Username is required</p>
+                    <p ng-message="minlength" class="alert alert-danger ">Username min length is 3</p>
+                </div>
+
+                <div ng-hide="registerCtrl.response.success">
+
+                        <p class="alert alert-danger">{{registerCtrl.errors.message}}</p>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="login-submit" id="login-submit" tabindex="4"
+                               class="form-control btn btn-login" value="Register">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

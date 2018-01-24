@@ -11,9 +11,9 @@
 </head>
 <body>
 
-<div ng-include="'views/navbar.html'"></div>
+<div ng-include="'navbar/navbar.html'"></div>
 
-<div class="container">
+<div class="container mar-bottom-3">
 
     <div ng-view></div>
 </div>
@@ -23,27 +23,37 @@
 <script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/angular-moment/angular-moment.min.js"></script>
+<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
+<script src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
 <script src="app.js"></script>
 <script src="app.config.js"></script>
 <script src="app.run.js"></script>
 
 <!-- Controllers-->
-<script src="js/controllers/startCtrl.js"></script>
-<script src="js/controllers/mainCtrl.js"></script>
-<script src="js/controllers/infoCtrl.js"></script>
-<script src="js/controllers/buyCtrl.js"></script>
-<script src="js/controllers/sellCtrl.js"></script>
-<script src="js/controllers/modalConfirmCtrl.js"></script>
-<script src="js/controllers/navbarCtrl.js"></script>
-<script src="js/controllers/modalController.js"></script>
+<script src="start/startCtrl.js"></script>
+<script src="main/mainCtrl.js"></script>
+<script src="info/infoCtrl.js"></script>
+<script src="buy/buyCtrl.js"></script>
+<script src="sell/sellCtrl.js"></script>
+<script src="main/modalConfirmCtrl.js"></script>
+<script src="navbar/navbarCtrl.js"></script>
+<script src="start/modalController.js"></script>
+<script src="register/register.controller.js"></script>
+<script src="login/login.controller.js"></script>
 <!-- Directives-->
-<script src="js/directives/backButtonDirective.js"></script>
+<script src="directives/backButtonDirective.js"></script>
 <!-- Services-->
-<script src="js/services/walletService.js"></script>
-<script src="js/services/currenciesService.js"></script>
-<script src="js/services/validateService.js"></script>
-<script src="js/services/randomCurrencyService.js"></script>
-<script src="js/services/ratesFactory.js"></script>
-<script src="js/services/logFactory.js"></script>
+<script src="services/walletService.js"></script>
+<script src="services/currenciesService.js"></script>
+<script src="services/validateService.js"></script>
+<script src="services/randomCurrencyService.js"></script>
+<script src="services/ratesFactory.js"></script>
+<script src="services/logFactory.js"></script>
+<script src="services/register.service.js"></script>
+<script src="services/auth.service.js"></script>
+<script src="services/tokenHelper.js"></script>
 </body>
 </html>
