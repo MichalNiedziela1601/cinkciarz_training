@@ -21,7 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "bluebird": "3.4.7",
-    "bower": "1.8.0",
+    "bower": "1.8.8",
     "browser-sync": "2.18.2",
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
